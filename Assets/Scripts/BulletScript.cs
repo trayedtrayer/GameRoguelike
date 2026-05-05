@@ -43,7 +43,7 @@ public class BulletScript : MonoBehaviour
         while (true)
         {
             timeDestroy -= 1f;
-            if (timeDestroy <= 0f) { CentralizedObjectPool.instancePool.ReturnObject(prefabBullet,gameObject); }
+            if (timeDestroy <= 0f) { CentralizedObjectPool.instancePool.ReturnObject(prefabBullet, gameObject); }
             yield return new WaitForSeconds(1f);
         }
     }
@@ -53,5 +53,93 @@ public class BulletScript : MonoBehaviour
         var push = collision.transform.position - transform.position;
         push.Normalize();
         collision.attachedRigidbody.AddForce(push * 2, ForceMode2D.Impulse);
+    }
+
+    void Reflection()
+    {
+        Ray2D ray = new Ray2D(transform.position, transform.right);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 0.1f, layermask);
+        if (hit.collider != null)
+        {
+            //Debug.DrawRay(transform.position, transform.right * 2, Color.blue, 2f);
+            //print(hit.point);
+
+            Vector2 pos = Vector2.Reflect(transform.right, hit.normal);
+            Debug.DrawRay(hit.point, pos, Color.blue, 2f);
+            float angle = Mathf.Atan2(pos.y, pos.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+            GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+            GetComponent<Rigidbody2D>().AddForce(transform.right * 2, ForceMode2D.Impulse);
+
+
+            //Debug.DrawRay(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position - transform.position, Color.blue, 2f);
+            //print(hit.collider.gameObject.name);
+            //Debug.DrawRay(hit.point, hit.normal, Color.magenta, 1f);
+        }
+    }
+    void Puff()
+    {
+        Ray2D ray = new Ray2D(transform.position, transform.right);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, 0.4f, layermask);
+        if (hit.collider != null)
+        {
+            Vector2 pos = -hit.normal;
+            Debug.DrawRay(hit.point, pos, Color.blue, 2f);
+            float angle = Mathf.Atan2(pos.y, pos.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+            Destroy(Instantiate(puffOnWall, hit.point, transform.rotation), 0.3f);
+        }
+
+
+    }
+
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Wall")
+        {
+            print(2);
+            Reflection();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<EnemyScript>())
+        {
+            collision.GetComponent<EnemyScript>().RemoveHp(damage);
+            Push(collision);
+            Destroy(gameObject);
+        }
+        else if (collision.tag == "Wall")
+        {
+            if (isReflect == false)
+            {
+                if (puffOnWall != null) Puff();
+                Destroy(gameObject);
+            }
+        }
+        else if (collision.GetComponent<EnemyBulletScript>())
+        {
+            if (isPushing)
+            {
+                collision.attachedRigidbody.linearVelocity = Vector2.zero;
+                collision.GetComponent<SpriteRenderer>().flipX = !collision.GetComponent<SpriteRenderer>().flipX;
+                Push(collision);
+                BulletScript c = collision.gameObject.AddComponent<BulletScript>();
+                c.SetSettings(damage, canPenetrate, timeDestroy, isPushing, isBreaking, isReflect, prefabBullet);
+                Destroy(collision.GetComponent<EnemyBulletScript>());
+            }
+            if (isBreaking)
+            {
+                Destroy(collision.gameObject);
+            }
+
+        }
+        else if (collision.GetComponent<DecorativeObjects>())
+        {
+            collision.GetComponent<DecorativeObjects>().RemoveHp(damage);
+            Destroy(gameObject);
+        }
     }
 }
