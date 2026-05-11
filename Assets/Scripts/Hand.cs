@@ -39,7 +39,6 @@ public class Hand : MonoBehaviour
                 skin.flipX = false;
                 weapon.flipY = false;
             }
-            print(angle);
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {

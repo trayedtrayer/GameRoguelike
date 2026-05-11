@@ -89,10 +89,10 @@ public class EnemyWeapon : MonoBehaviour
             else
             {
                 target = CheckByRay();
-                //if (GetComponentInParent<MeleeEnemyScript>())
-                //{
-                //    GetComponentInParent<MeleeEnemyScript>().target = target;
-                //}
+                if (GetComponentInParent<MeleeEnemyScript>())
+                {
+                    GetComponentInParent<MeleeEnemyScript>().target = target;
+                }
                 yield return new WaitForSeconds(0.5f);
             }
             yield return new WaitForSeconds(0.2f);

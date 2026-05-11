@@ -50,6 +50,20 @@ public class WeaponMain : MonoBehaviour
         damageBullet *= Mathf.CeilToInt(1 + (0.2f * lvlWeapon));
     }
 
+    public void WeaponUpgrade(Crafting.Upgrade upgrade)
+    {
+        print(1);
+        timeDelayStartShootMin = upgrade.timeDelayStartShootMin;        //увеличение времени "прогретости оружия"
+        timeDelayStartShootMax = upgrade.timeDelayStartShootMax;        //уменьшение максимального времени для того чтобы прогреть оружие
+        timeDelayShot = upgrade.timeDelayShot;                          //уменьшение времени задержки между выстрелами
+        spread += upgrade.spread;                                        //увелчиение колиечство волн в выстрелах оружия
+        timeDelaySpray = upgrade.timeDelaySpray;                        //уменьшение задержки меджу волнами выстрелов оружия
+        countBullet += upgrade.countBullet;                              //увеличение кол-ва пуль в волне оружия
+        forceBullet = upgrade.bulletPower;                              //увеличение скорости пули
+        damageBullet = upgrade.damage;                                   //увеличение дамага
+        lvlWeapon += 1;                                                  //увеличение лвла оружия для статистики
+    }
+
     public virtual void StartShooting()
     {
         //start
@@ -87,7 +101,7 @@ public class WeaponMain : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Wall")
+        if (collision.tag == "Wall")
         {
             canShoot = false;
         }
@@ -95,7 +109,7 @@ public class WeaponMain : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.tag == "Wall")
+        if (collision.tag == "Wall")
         {
             canShoot = true;
         }
