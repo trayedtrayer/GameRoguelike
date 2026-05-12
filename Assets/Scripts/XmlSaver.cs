@@ -14,7 +14,7 @@ public class XmlSaver : MonoBehaviour
         public string weaponOneName;
         public string weaponTwoName;
         public int hp;
-        public int mana;
+        public float shield;
         public int xp;
         public int money;
         public int xpForNewLvl;
@@ -95,7 +95,7 @@ public class XmlSaver : MonoBehaviour
             weaponOneName = hand.GunOne.GetComponentInChildren<WeaponMain>().weaponName,
             weaponTwoName = hand.GunTwo.GetComponentInChildren<WeaponMain>().weaponName,
             hp = playerStats.GetHp(),
-            mana = playerStats.GetMana(),
+            shield = playerStats.GetShield(),
             xp = playerStats.GetXp(),
             xpForNewLvl = playerStats.GetXpForNewLvl(),
             lvl = playerStats.GetLvl(),

@@ -8,15 +8,16 @@ public class EnemyBulletScript : MonoBehaviour
     public bool isBreaking;
     public bool isPushing;
     float timeDestroy;
+    GameObject bulletPrefab;
 
-
-    public void SetSettings(int _damage, bool _canPenetrate, float _timeDestroy, bool _isPushing, bool _isBreaking)
+    public void SetSettings(int _damage, bool _canPenetrate, float _timeDestroy, bool _isPushing, bool _isBreaking, GameObject _bulletPrefab)
     {
         canPenetrate = _canPenetrate;
         damage = _damage;
         timeDestroy = _timeDestroy;
         isPushing = _isPushing;
         isBreaking = _isBreaking;
+        bulletPrefab = _bulletPrefab;
         StartCoroutine(BulletDestroy());
     }
 
@@ -25,9 +26,15 @@ public class EnemyBulletScript : MonoBehaviour
         while (true)
         {
             timeDestroy -= 1f;
-            if (timeDestroy <= 0f) { Destroy(gameObject); }
+            if (timeDestroy <= 0f) { ObjectDestroy(); }
             yield return new WaitForSeconds(1f);
         }
+    }
+
+    public void ObjectDestroy()
+    {
+        StopAllCoroutines();
+        CentralizedObjectPool.instancePool.ReturnObject(bulletPrefab, gameObject);
     }
 
     public void Push(Collider2D collision)
@@ -43,15 +50,11 @@ public class EnemyBulletScript : MonoBehaviour
         {
             collision.GetComponent<PlayerStats>().RemoveHp(damage);
             Push(collision);
-            Destroy(gameObject);
+            ObjectDestroy();
         }
         else if (collision.tag == "Wall")
         {
-            Destroy(gameObject);
-        }
-        if (isBreaking)
-        {
-            Destroy(collision.gameObject);
+            ObjectDestroy();
         }
         //else if (collision.tag == "PlayerBullet")
         //{

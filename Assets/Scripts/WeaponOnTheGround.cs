@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class WeaponOnTheGround : MonoBehaviour
 {
     public GameObject prefab;
-    public Sprite spriteWeapon;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

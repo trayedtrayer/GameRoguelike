@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class Hand : MonoBehaviour
     public GameObject GunOne;
     public GameObject GunTwo;
     public int activeWeapon;
+    bool isCooldown;
+    public float TimeCooldown;
     public SpriteRenderer skin;
     public SpriteRenderer weapon;
     public GameObject weaponToTake;
@@ -42,11 +45,19 @@ public class Hand : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SetActiveWeapon(0);
+            if (!isCooldown)
+            {
+                SetActiveWeapon(0);
+                StartCooldown();
+            }
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            SetActiveWeapon(1);
+            if (!isCooldown)
+            {
+                SetActiveWeapon(1);
+                StartCooldown();
+            }
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -120,7 +131,7 @@ public class Hand : MonoBehaviour
     public void ShowWeapon(TextMeshProUGUI _text, WeaponOnTheGround _weapon)
     {
         _text.text = "Press E to take " + _weapon.prefab.GetComponentInChildren<WeaponMain>().weaponName;
-        weaponToTake = _weapon.prefab;
+        weaponToTake = _weapon.gameObject;
     }
 
     public void CreateWeaponForSave(GameObject gameObject, int _numWeapon)
@@ -142,6 +153,17 @@ public class Hand : MonoBehaviour
             SetActiveWeapon(0);
         }
         weaponToTake = null;
+    }
+
+    void StartCooldown()
+    {
+        isCooldown = true;
+        Invoke("EndCooldown", TimeCooldown);
+    }
+
+    void EndCooldown()
+    {
+        isCooldown = false;
     }
 
     void SetSprites()

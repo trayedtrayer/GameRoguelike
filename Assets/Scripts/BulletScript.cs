@@ -43,9 +43,15 @@ public class BulletScript : MonoBehaviour
         while (true)
         {
             timeDestroy -= 1f;
-            if (timeDestroy <= 0f) { CentralizedObjectPool.instancePool.ReturnObject(prefabBullet, gameObject); }
+            if (timeDestroy <= 0f) { ObjectDestroy(); }
             yield return new WaitForSeconds(1f);
         }
+    }
+
+    void ObjectDestroy()
+    {
+        StopAllCoroutines();
+        CentralizedObjectPool.instancePool.ReturnObject(prefabBullet, gameObject);
     }
 
     public void Push(Collider2D collision)
@@ -109,37 +115,42 @@ public class BulletScript : MonoBehaviour
         {
             collision.GetComponent<EnemyScript>().RemoveHp(damage);
             Push(collision);
-            Destroy(gameObject);
+            ObjectDestroy();
         }
         else if (collision.tag == "Wall")
         {
             if (isReflect == false)
             {
                 if (puffOnWall != null) Puff();
-                Destroy(gameObject);
+                ObjectDestroy();
             }
         }
         else if (collision.GetComponent<EnemyBulletScript>())
         {
-            if (isPushing)
-            {
-                collision.attachedRigidbody.linearVelocity = Vector2.zero;
-                collision.GetComponent<SpriteRenderer>().flipX = !collision.GetComponent<SpriteRenderer>().flipX;
-                Push(collision);
-                BulletScript c = collision.gameObject.AddComponent<BulletScript>();
-                c.SetSettings(damage, canPenetrate, timeDestroy, isPushing, isBreaking, isReflect, prefabBullet);
-                Destroy(collision.GetComponent<EnemyBulletScript>());
-            }
+            //if (isPushing)
+            //{
+            //    collision.attachedRigidbody.linearVelocity = Vector2.zero;
+            //    collision.GetComponent<SpriteRenderer>().flipX = !collision.GetComponent<SpriteRenderer>().flipX;
+            //    Push(collision);
+            //    BulletScript c = collision.gameObject.AddComponent<BulletScript>();
+            //    c.SetSettings(damage, canPenetrate, timeDestroy, isPushing, isBreaking, isReflect, prefabBullet);
+            //    Destroy(collision.GetComponent<EnemyBulletScript>());
+            //}
             if (isBreaking)
             {
-                Destroy(collision.gameObject);
+                collision.GetComponent<EnemyBulletScript>().ObjectDestroy();
+                //хглемхрэ мю бпюфеяйху оскъу вепег нафейр оскк
+                //хглемхрэ мю бпюфеяйху оскъу вепег нафейр оскк
+                //хглемхрэ мю бпюфеяйху оскъу вепег нафейр оскк
+                //хглемхрэ мю бпюфеяйху оскъу вепег нафейр оскк
+                //хглемхрэ мю бпюфеяйху оскъу вепег нафейр оскк
             }
 
         }
         else if (collision.GetComponent<DecorativeObjects>())
         {
             collision.GetComponent<DecorativeObjects>().RemoveHp(damage);
-            Destroy(gameObject);
+            ObjectDestroy();
         }
     }
 }

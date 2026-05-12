@@ -153,9 +153,9 @@ MonoBehaviour:
   timeDelayStartShootMax: 0
   placeSpawn: {fileID: 9111056131721593228}
   weaponName: M9
-  prefabWeapon: {fileID: 0}
+  prefabWeapon: {fileID: 7716100242607214591}
   lvlWeapon: 0
-  type: 2
-  spriteWeapon: {fileID: 0}
+  type: 3
+  spriteWeapon: {fileID: -7428548920389936948, guid: c6844cad8adf2954c8a59fd40e0bd893, type: 3}
   canShoot: 1
   manaCost: 0

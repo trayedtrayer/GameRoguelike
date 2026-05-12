@@ -34,7 +34,6 @@ public class WeaponMain : MonoBehaviour
         miniguns = 3
     }
     Animator animator;
-    [HideInInspector]
     public Sprite spriteWeapon;
     public bool canShoot = true;
 
@@ -80,7 +79,6 @@ public class WeaponMain : MonoBehaviour
         if (shotEffect != null) Destroy(Instantiate(shotEffect, placeSpawn.transform.position, transform.rotation), 0.2f);
         for (int i = 0; i < countBullet; i++)
         {
-            print(1);
             var _b = CentralizedObjectPool.instancePool.GetObject(bullet);
             _b.transform.position = placeSpawn.position;
             _b.transform.rotation = placeSpawn.rotation;//bullet, placeSpawn.position, placeSpawn.rotation);
@@ -92,6 +90,10 @@ public class WeaponMain : MonoBehaviour
             if (_b.GetComponent<BulletScript>())
             {
                 _b.gameObject.GetComponent<BulletScript>().SetSettings(damageBullet, canPenetrate, timeDestroy, isPushing, isBreaking, isReflect, bullet);
+            }
+            if (_b.GetComponent<EnemyBulletScript>())
+            {
+                _b.gameObject.GetComponent<EnemyBulletScript>().SetSettings(damageBullet, canPenetrate, timeDestroy, isPushing, isBreaking, bullet);
             }
             yield return new WaitForSeconds(timeDelaySpray);
         }

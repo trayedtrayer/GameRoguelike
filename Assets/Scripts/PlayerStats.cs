@@ -1,11 +1,8 @@
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
-using NUnit.Framework;
-using System.Collections.Generic;
-using System;
-using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public static class Player
 {
@@ -19,9 +16,12 @@ public class PlayerStats : MonoBehaviour
     public int maxHp;
     int level = 1;
     int hp;
-    int mana;
+    float shield;
+    float shieldCooldown;
+    bool canBeCooldoownShield;
+    public float maxShieldCooldown;
     public int currentLvl = 0;
-    public int maxMana;
+    public float maxShield;
     public int money;
     public bool isMortal;
     GameObject cameraFollow;
@@ -29,12 +29,13 @@ public class PlayerStats : MonoBehaviour
     public int playerId;
     public GameObject deadBody;
     [Header("UI And Other")]
-    public Image manaBar;
+    public Image shieldBar;
+    public Image shieldCooldownBar;
     public Image hpBar;
     public Image expBar;
     public Image loadBar;
     public TextMeshProUGUI hpText;
-    public TextMeshProUGUI manaText;
+    public TextMeshProUGUI shieldText;
     public TextMeshProUGUI expText;
     public TextMeshProUGUI lvlText;
     public TextMeshProUGUI textWeapon;
@@ -52,9 +53,10 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
-        mana = maxMana;
+        shield = maxShield;
         hp = maxHp;
         RefreshTexts();
+        StartCoroutine(ShieldEnum());
         XmlSaver.GameStats stats = XmlSaver.Read();
         DataBase.SetWeapons();
         if (stats != null)
@@ -70,7 +72,7 @@ public class PlayerStats : MonoBehaviour
     void LoadSave(XmlSaver.GameStats stats)
     {
         hp = stats.hp;
-        mana = stats.mana;
+        shield = stats.shield;
         currentLvl = stats.currentLvl;
         level = stats.lvl;
         exp = stats.xp;
@@ -109,33 +111,23 @@ public class PlayerStats : MonoBehaviour
         cameraFollow = _cam;
     }
 
-    public bool IsEnoughMana(int _needMana)
-    {
-        if (_needMana <= mana)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public void ManaRemove(int _manaRemove)
-    {
-        mana -= _manaRemove;
-        RefreshTexts();
-    }
-
     public void RemoveHp(int _hpRemove)
     {
         if (!isMortal)
         {
-            hp -= _hpRemove;
-            GetComponentInChildren<Animator>().Play("Hit");
-            BecomeImmortal();
-            Invoke("BecomeMortal", 0.1f);
-            RefreshTexts();
+            if (shield <= 0)
+            {
+                hp -= _hpRemove;
+                GetComponentInChildren<Animator>().Play("Hit");
+                BecomeImmortal();
+                Invoke("BecomeMortal", 0.1f);
+                HitForShield();
+                RefreshTexts();
+            }
+            else
+            {
+                RemoveShield(_hpRemove);
+            }
         }
         if (hp <= 0)
         {
@@ -143,13 +135,27 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    void RemoveShield(int _hpRemove)
+    {
+        if(shield - _hpRemove < 0)
+        {
+            shield = 0;
+            RemoveHp((int)Mathf.Abs(shield-_hpRemove));
+        }
+        else 
+        {
+            shield -= _hpRemove;
+        }
+        HitForShield();
+    }
+
     void Dead()
     {
         GetComponent<CapsuleCollider2D>().enabled = false;
         hp = maxHp;
-        mana = maxMana;
+        shield = maxShield;
         XmlSaver.Write(this, hand);
-        mana = 0;
+        shield = 0;
         hp = 0;
         GameObject t = Instantiate(deadBody, transform.position, Quaternion.identity);
         cameraFollow.GetComponent<CameraFollowing>().SetObjectFollowing(t.transform);
@@ -188,9 +194,9 @@ public class PlayerStats : MonoBehaviour
         return hp;
     }
 
-    public int GetMana()
+    public float GetShield()
     {
-        return mana;
+        return shield;
     }
 
     public int GetXp()
@@ -231,9 +237,10 @@ public class PlayerStats : MonoBehaviour
     public void RefreshTexts()
     {
         hpText.text = hp + "/" + maxHp;
-        manaText.text = mana + "/" + maxMana;
+        shieldText.text = Mathf.FloorToInt(shield) + "/" + maxShield;
         expText.text = exp + "/" + expForNewLvl;
-        manaBar.fillAmount = (float)mana / maxMana;
+        shieldBar.fillAmount = shield / maxShield;
+        shieldCooldownBar.fillAmount = 1f-(shieldCooldown / maxShieldCooldown);
         hpBar.fillAmount = (float)hp / maxHp;
         expBar.fillAmount = (float)exp / expForNewLvl;
         lvlText.text = "" + level;
@@ -373,5 +380,39 @@ public class PlayerStats : MonoBehaviour
             }
         }
         return itemsAccept.Count == 0 && isMoney ? true : false;
+    }
+
+    void HitForShield()
+    {
+        shieldCooldown = maxShieldCooldown;
+        canBeCooldoownShield = true;
+    }
+
+    IEnumerator ShieldEnum()
+    {
+        while (true)
+        {
+            if (canBeCooldoownShield)
+            {
+                shieldCooldown -= 0.02f;
+                RefreshTexts();
+                yield return new WaitForSeconds(0.02f);
+            }
+            if (shieldCooldown <= 0)
+            {
+                canBeCooldoownShield = false;
+                if (shield < maxShield)
+                {
+                    shield += 0.02f;
+                    RefreshTexts();
+                }
+                else
+                {
+                    shield = maxShield;
+                    RefreshTexts();
+                }
+                yield return new WaitForSeconds(0.02f);
+            }
+        }
     }
 }
