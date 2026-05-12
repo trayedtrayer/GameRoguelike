@@ -152,7 +152,7 @@ MonoBehaviour:
   timeDelayStartShootMin: 0
   timeDelayStartShootMax: 0
   placeSpawn: {fileID: 4130405844874653169}
-  weaponName: ak
+  weaponName: Shotgun
   prefabWeapon: {fileID: 0}
   lvlWeapon: 0
   type: 2

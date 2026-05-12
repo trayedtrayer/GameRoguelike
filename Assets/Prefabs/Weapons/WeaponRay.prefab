@@ -121,7 +121,7 @@ MonoBehaviour:
   timeDelayStartShootMin: 0
   timeDelayStartShootMax: 0
   placeSpawn: {fileID: 1087025692164406077}
-  weaponName: ak
+  weaponName: Ray
   prefabWeapon: {fileID: 0}
   lvlWeapon: 0
   type: 2
