@@ -186,7 +186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5372332452932671164}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.741, y: -1.189, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -221,7 +221,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &5959375168564434019
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -274,11 +274,11 @@ MonoBehaviour:
   hp: 10
   deadBody: {fileID: 5918164333479790651, guid: 8056425b876fcad4ba547026008cea11, type: 3}
   randItem: {fileID: 0}
-  distanceToEnableCulling: 0
-  speed: 0
-  distRun: 0
-  timeRun: 0
-  timeIdle: 0
+  distanceToEnableCulling: 7
+  speed: 1
+  distRun: 2
+  timeRun: 1
+  timeIdle: 3
 --- !u!1 &6213848854443797823
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +382,7 @@ Animator:
   m_GameObject: {fileID: 6213848854443797823}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9d1b43b04bc584d49b624e28d584670c, type: 2}
+  m_Controller: {fileID: 9100000, guid: dcb4b7e800f5b0a4486b505f0129fd09, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

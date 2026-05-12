@@ -71,7 +71,6 @@ public class WeaponMain : MonoBehaviour
 
     public void Shoot()
     {
-        print(2);
         StartCoroutine(Shoots());
 
     }

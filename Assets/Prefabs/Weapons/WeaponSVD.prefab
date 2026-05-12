@@ -153,7 +153,7 @@ MonoBehaviour:
   timeDelayStartShootMax: 0
   placeSpawn: {fileID: 8585422551463288222}
   weaponName: svd
-  prefabWeapon: {fileID: 0}
+  prefabWeapon: {fileID: 7918525021204492281, guid: 1781be024cbf0b74990d99709c47d558, type: 3}
   lvlWeapon: 0
   type: 2
   spriteWeapon: {fileID: 0}

@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         playerStats = GetComponent<PlayerStats>();
         particle = GetComponentInChildren<ParticleSystem>();
+        print(particle.gameObject.name);
         particle.Stop();
     }
 
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Rollin()
     {
+        print("YAHA");
         isRoll = true;
         float _sp = speed;
         var push = new Vector2(moveHorizontal, moveVertical);

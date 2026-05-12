@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnemyWeapon : MonoBehaviour
 {
-    [HideInInspector]
+   // [HideInInspector]
     public GameObject target;
     public SpriteRenderer skin;
     public SpriteRenderer weapon;

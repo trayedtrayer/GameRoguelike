@@ -183,5 +183,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d676c1040246d04419b60f470e41f14f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponOnTheGround
-  prefab: {fileID: 0}
-  spriteWeapon: {fileID: 0}
+  prefab: {fileID: 8146437673351228797, guid: 401749ba5b7423d4fb23a32b2bbbf609, type: 3}
+  spriteWeapon: {fileID: 1294590711525115350, guid: c6844cad8adf2954c8a59fd40e0bd893, type: 3}

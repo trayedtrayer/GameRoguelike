@@ -121,8 +121,8 @@ MonoBehaviour:
   timeDelayStartShootMin: 0
   timeDelayStartShootMax: 0
   placeSpawn: {fileID: 6942481610408969474}
-  weaponName: ak
-  prefabWeapon: {fileID: 0}
+  weaponName: DestructionCannon
+  prefabWeapon: {fileID: 8321616338233178432, guid: a5b44a46e6fcfb14d88148e0ba98f638, type: 3}
   lvlWeapon: 0
   type: 2
   spriteWeapon: {fileID: 0}

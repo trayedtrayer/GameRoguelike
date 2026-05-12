@@ -133,6 +133,8 @@ public class PlayerStats : MonoBehaviour
         {
             hp -= _hpRemove;
             GetComponentInChildren<Animator>().Play("Hit");
+            BecomeImmortal();
+            Invoke("BecomeMortal", 0.1f);
             RefreshTexts();
         }
         if (hp <= 0)

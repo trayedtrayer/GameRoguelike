@@ -61,7 +61,6 @@ public class CentralizedObjectPool : MonoBehaviour
     }
     public GameObject GetObject(GameObject prefabObj)
     {
-        Debug.Log(1);
         if (pools.TryGetValue(prefabObj, out var pool))
         {
             return pool.Get();

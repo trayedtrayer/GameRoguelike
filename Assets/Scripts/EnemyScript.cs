@@ -9,7 +9,6 @@ public class EnemyScript : MonoBehaviour
     public GameObject deadBody;
     MozgGeneration mozg;
     public GameObject randItem;
-    public float distanceToEnableCulling;
 
     private void Start()
     {

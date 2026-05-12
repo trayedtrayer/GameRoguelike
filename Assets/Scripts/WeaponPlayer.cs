@@ -7,20 +7,17 @@ public class WeaponPlayer : WeaponMain
 
     public override void StartShooting()
     {
-        print(1);
         StartCoroutine(Shooting());
         StartCoroutine(MinusDelay());
     }
 
     IEnumerator Shooting()
     {
-        print(3);
         while (true)
         {
             yield return new WaitForSeconds(0.02f);
             if (Input.GetMouseButton(0))
             {
-                print(4);
                 if (timeDelayStartShoot <= 0)
                 {
                     Shoot();
