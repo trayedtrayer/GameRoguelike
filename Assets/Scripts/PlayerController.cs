@@ -1,24 +1,27 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed;
     float moveHorizontal;
     float moveVertical;
-    Animator animator;
+    public Animator animator;
     Rigidbody2D rb2d;
     public bool isRoll;
     PlayerStats playerStats;
-    public float timeDilationRoll;
+    public float timeDilation;
+    public float timeDilationRollMax;
     public float timeRoll;
     public float speedMultiplierRoll;
     ParticleSystem particle;
     bool spB;
     bool isBlown;
     bool canMove = true;
+    public GameObject parentStatusBar;
+    public GameObject prefabCooldown;
 
     void Awake()
     {
@@ -69,7 +72,22 @@ public class PlayerController : MonoBehaviour
         playerStats.BecomeMortal();
         particle.Stop();
         canMove = true;
-        yield return new WaitForSeconds(timeDilationRoll);
+        Image t = Instantiate(prefabCooldown, parentStatusBar.transform).GetComponent<Image>();
+        timeDilation = timeDilationRollMax;
+        while (true)
+        {
+            if (timeDilation > 0)
+            {
+                timeDilation -= 0.02f;
+                t.fillAmount = timeDilation / timeDilationRollMax;
+                yield return new WaitForSeconds(0.02f);
+            }
+            else
+            {
+                Destroy(t.gameObject);
+                break;
+            }
+        }
         isRoll = false;
     }
 

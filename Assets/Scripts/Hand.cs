@@ -84,17 +84,17 @@ public class Hand : MonoBehaviour
         {
             Instantiate(GunOne.GetComponentInChildren<WeaponMain>().prefabWeapon, transform.position, transform.rotation);
             Destroy(GunOne.transform.GetChild(0).gameObject);
-            GameObject w = Instantiate(weaponToTake, GunOne.transform);
+            GameObject w = Instantiate(weaponToTake.GetComponent<WeaponOnTheGround>().prefab, GunOne.transform);
             StartCoroutine(SetSkins(0));
-            weaponOneImage.sprite = w.GetComponent<WeaponMain>().spriteWeapon;
+            weaponOneImage.sprite = w.GetComponentInChildren<WeaponMain>().spriteWeapon;
         }
         else
         {
             Instantiate(GunTwo.GetComponentInChildren<WeaponMain>().prefabWeapon, transform.position, transform.rotation);
             Destroy(GunTwo.transform.GetChild(0).gameObject);
-            GameObject w = Instantiate(weaponToTake, GunTwo.transform);
+            GameObject w = Instantiate(weaponToTake.GetComponent<WeaponOnTheGround>().prefab, GunTwo.transform);
             StartCoroutine(SetSkins(1));
-            weaponTwoImage.sprite = w.GetComponent<WeaponMain>().spriteWeapon;
+            weaponTwoImage.sprite = w.GetComponentInChildren<WeaponMain>().spriteWeapon;
         }
         Destroy(weaponToTake.gameObject);
     }

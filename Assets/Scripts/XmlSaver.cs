@@ -31,6 +31,7 @@ public class XmlSaver : MonoBehaviour
 
     public void SetNewLevel(GameObject player, Image load, int buildIndex)
     {
+        print(player + "-" + load + "-" + buildIndex);
         if (!isLoading)
         {
             StartCoroutine(PlayerLoad(player, load, buildIndex));

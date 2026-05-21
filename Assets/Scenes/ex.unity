@@ -130,6 +130,8 @@ GameObject:
   - component: {fileID: 140581432}
   - component: {fileID: 140581431}
   - component: {fileID: 140581430}
+  - component: {fileID: 140581433}
+  - component: {fileID: 140581434}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -211,6 +213,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &140581433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140581429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
+--- !u!114 &140581434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140581429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d258402e0d0106f429102105a7d5d305, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraFollowing
+  speed: 2
 --- !u!1 &171999575
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,6 +524,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2068506339}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &992108734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 992108735}
+  m_Layer: 0
+  m_Name: ParentForDeco
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &992108735
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992108734}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.15393, y: -0.06953, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1151049721
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,6 +681,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2068506339}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1303405498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1303405499}
+  m_Layer: 0
+  m_Name: ParentForEnemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1303405499
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303405498}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.15393, y: -0.06953, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1412492527
 PrefabInstance:
@@ -787,6 +908,7 @@ GameObject:
   - component: {fileID: 2068506339}
   - component: {fileID: 2068506338}
   - component: {fileID: 2068506337}
+  - component: {fileID: 2068506340}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -806,11 +928,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c0b5a08d7fb2d64ebe50fb7d6841f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldGeneration
-  worldX: 100
-  worldY: 100
-  minRoom: 5
-  maxRoom: 8
-  countCenterPointRoom: 3
+  worldX: 150
+  worldY: 150
+  minRoom: 8
+  maxRoom: 16
+  countCenterPointRoom: 10
   netWeightRoom: 0
   tilemapWall: {fileID: 1151049722}
   tilemapWallRL: {fileID: 387931746}
@@ -824,12 +946,15 @@ MonoBehaviour:
   tunnelWidth: 3
   portal: {fileID: 4434252999220571619, guid: 9dfdc51bed550af46bdee87473be0e16, type: 3}
   portalOnStart: {fileID: 4434252999220571619, guid: 9dfdc51bed550af46bdee87473be0e16, type: 3}
-  lvl: 3
-  enemy: []
+  lvl: 200
+  enemy:
+  - costSpawn: 1
+    enemy: {fileID: 5372332452932671164, guid: d49d8e2a9d424544ab1981a8b9aed1b5, type: 3}
+    weight: 1
   decorates: []
   countEnemies: 0
-  parentForEnemy: {fileID: 0}
-  parentForDecorates: {fileID: 0}
+  parentForEnemy: {fileID: 1303405499}
+  parentForDecorates: {fileID: 992108735}
 --- !u!156049354 &2068506338
 Grid:
   m_ObjectHideFlags: 0
@@ -861,6 +986,25 @@ Transform:
   - {fileID: 171999578}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2068506340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068506336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dea0195170f30440b285702db394d05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MozgGeneration
+  portal: {fileID: 4227867104448263922, guid: 3b1d0cfc9637d4f46b3e08ada0989b9b, type: 3}
+  portalOld: {fileID: 8074863486377489763, guid: 9dfdc51bed550af46bdee87473be0e16, type: 3}
+  enemyCount: 5
+  player: {fileID: 0}
+  minCountEnemy: 3
+  time: 30
+  enemyKilled: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -868,3 +1012,5 @@ SceneRoots:
   - {fileID: 140581432}
   - {fileID: 1412492527}
   - {fileID: 2068506339}
+  - {fileID: 992108735}
+  - {fileID: 1303405499}

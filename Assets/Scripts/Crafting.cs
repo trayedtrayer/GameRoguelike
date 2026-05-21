@@ -8,7 +8,6 @@ public class Crafting : MonoBehaviour
 {
     public class Upgrade
     {
-        //0-timeDelayStartShootMin, 1-timeDelayStartShootMax, 2-timeDelayShot, 3-spread, 4-timeDelaySpray, 5-countBullet
         public int damage;
         public float timeDelayStartShootMin;
         public float timeDelayStartShootMax;
@@ -22,76 +21,6 @@ public class Crafting : MonoBehaviour
         public WeaponMain weapon;
         public int money;
         public List<DataBase.Item> items = new List<DataBase.Item>();
-        public Upgrade ReturnUpgradeByClass(int _type, WeaponMain _weapon)
-        {
-            int chance = UnityEngine.Random.Range(0, 100);
-            float multiplier = 0;
-            multiplier = chance > 90 ? 4 : 0;
-            multiplier = chance < 90 && chance >= 70 ? 2.51f : multiplier;
-            multiplier = chance < 70 && chance >= 40 ? 1.51f : multiplier;
-            multiplier = chance < 40 ? 0.51f : multiplier;
-            for (int i = 0; i < Mathf.Round(multiplier); i++)
-            {
-                DataBase.Item item = DataBase.ReturnRandomItem((DataBase.Item.classResource)i);
-                item.countItem = 2 * (int)Mathf.Round(multiplier - i);
-                print(item);
-                items.Add(item);
-            }
-            float j = 0.5f * multiplier;
-            money = UnityEngine.Random.Range(Mathf.CeilToInt(50 * multiplier) - 50, Mathf.CeilToInt(50 * multiplier) + 50);
-            if (money <= 0)
-            {
-                money = 35;
-            }
-            color = DataBase.colors[type];
-            Upgrade upgrade = new Upgrade();
-            upgrade.damage = Mathf.CeilToInt(_weapon.damageBullet * multiplier);
-            if (type == 0)
-            {
-                bulletPower = (int)Mathf.Round(_weapon.forceBullet * (1 + (0.15f * j)));
-                timeDelayShot = _weapon.timeDelayShot * (1f - 0.05f * multiplier);
-            }
-            if (type == 1)
-            {
-                bulletPower = (int)Mathf.Round(_weapon.forceBullet * (1 + (0.15f * j)));
-                timeDelayShot = _weapon.timeDelayShot * (1f - 0.05f * multiplier);
-                if (UnityEngine.Random.Range(0, 100) > 80 && Mathf.Round(multiplier) == 4)
-                {
-                    spread += 1;
-                }
-                if (UnityEngine.Random.Range(0, 100) > 70 && Mathf.Round(multiplier) == 3 || Mathf.Round(multiplier) == 3)
-                {
-                    countBullet += 1;
-                }
-            }
-            if (type == 2)
-            {
-                bulletPower = (int)Mathf.Round(_weapon.forceBullet * (1 + (0.15f * j)));
-                timeDelayShot = _weapon.timeDelayShot * (1f - 0.05f * multiplier);
-                if (UnityEngine.Random.Range(0, 100) > 80 && Mathf.Round(multiplier) == 4)
-                {
-                    spread += 1;
-                }
-            }
-            if (type == 3)
-            {
-                bulletPower = (int)Mathf.Round(_weapon.forceBullet * (1 + (0.15f * j)));
-                timeDelayStartShootMin = _weapon.timeDelayShot - 0.15f * multiplier;
-                timeDelayStartShootMax = _weapon.timeDelayShot - 0.05f * multiplier; ;
-            }
-            upgrade.bulletPower = bulletPower;
-            upgrade.timeDelayShot = timeDelayShot;
-            upgrade.spread = spread;
-            upgrade.timeDelaySpray = timeDelaySpray;
-            upgrade.timeDelayStartShootMin = timeDelayStartShootMin;
-            upgrade.timeDelayStartShootMax = timeDelayStartShootMax;
-            upgrade.type = _type;
-            upgrade.weapon = _weapon;
-            upgrade.color = DataBase.colors[(int)Mathf.Round(multiplier) - 1];
-            upgrade.money = money;
-            upgrade.items = items;
-            return upgrade;
-        }
     }
 
     //1 2 3 4 5 6
@@ -124,9 +53,22 @@ public class Crafting : MonoBehaviour
         List<GameObject> weapons = DataBase.weapons;
         foreach (GameObject weapon in weapons)
         {
+            WeaponMain weaponMain = weapon.GetComponentInChildren<WeaponMain>();
+            CraftUpgradeData data = CraftSystem.GenerateUpgrade(weaponMain);
             Upgrade upgrade = new Upgrade();
-            int type = UnityEngine.Random.Range(0, 4);
-            upgrade = upgrade.ReturnUpgradeByClass(type, weapon.GetComponentInChildren<WeaponMain>());
+            upgrade.damage = data.damage;
+            upgrade.timeDelayShot = data.timeDelayShot;
+            upgrade.timeDelayStartShootMin = data.timeDelayStartShootMin;
+            upgrade.timeDelayStartShootMax = data.timeDelayStartShootMax;
+            upgrade.spread = data.spread;
+            upgrade.timeDelaySpray = data.timeDelaySpray;
+            upgrade.countBullet = data.countBullet;
+            upgrade.bulletPower = data.bulletPower;
+            upgrade.money = data.money;
+            upgrade.items = data.requiredItems;
+            upgrade.weapon = data.weapon;
+            upgrade.type = data.type;
+            upgrade.color = data.rarityColor;
             GameObject t = Instantiate(prefabUiCraft, parentOfCrafts.transform);
             t.GetComponent<UiForCraft>().upgrade = upgrade;
             t.GetComponent<UiForCraft>().crafter = this;

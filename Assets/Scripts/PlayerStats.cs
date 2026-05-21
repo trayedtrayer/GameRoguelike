@@ -356,11 +356,11 @@ public class PlayerStats : MonoBehaviour
     public List<bool> PlayerBuilds()
     {
         List<bool> s = new List<bool>();
-        Transform t = GameObject.Find("ListBuildings").transform;
-        for (int i = 0; i < t.childCount; i++)
-        {
-            s.Add(t.GetChild(i).gameObject.activeSelf);
-        }
+        //Transform t = GameObject.Find("ListBuildings").transform;
+        //for (int i = 0; i < t.childCount; i++)
+        //{
+        //    s.Add(t.GetChild(i).gameObject.activeSelf);
+        //}
         return s;
     }
 
