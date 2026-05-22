@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemScript
   item:
     sprite: {fileID: 21300000, guid: 6658ede7c010c1b4589e79c7c65554ca, type: 3}
-    countItem: 2
-    nameItem: Iron
+    countItem: 1
+    nameItem: "\u041A\u043E\u0441\u0442\u0438"
     classRes: 2

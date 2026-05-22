@@ -55,11 +55,11 @@ MonoBehaviour:
     - itemName: "\u041F\u043E\u0441\u043E\u0445"
       count: 5
   valuesPerLevel:
-  - 5
-  - 5
-  - 5
-  - 5
-  - 5
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
   statType: 0
   requiredNodeId: 
   requiredNodeMinLevel: 1
