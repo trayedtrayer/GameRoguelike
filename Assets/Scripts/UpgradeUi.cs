@@ -4,11 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Меню прокачки, открывается по Tab.
-/// Три вкладки: Общие / Оружие / Специальные.
-/// Создаёт кнопки для каждого узла UpgradeNodeData.
-/// </summary>
 public class UpgradeUI : MonoBehaviour
 {
     [Header("Главное окно")]

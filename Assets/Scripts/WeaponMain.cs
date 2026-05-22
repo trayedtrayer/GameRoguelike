@@ -32,18 +32,9 @@ public class WeaponMain : MonoBehaviour
     public Sprite spriteWeapon;
     public bool canShoot = true;
 
-    [Header("Audio")]
-    public AudioClip shootSound;
-    public AudioSource audioSource;
-
     private void Start()
     {
         spriteWeapon = GetComponent<SpriteRenderer>().sprite;
-
-        
-        if (audioSource == null)
-            audioSource = GetComponent<AudioSource>();
-
         StartShooting();
     }
 
@@ -53,29 +44,12 @@ public class WeaponMain : MonoBehaviour
         damageBullet *= Mathf.CeilToInt(1 + (0.2f * lvlWeapon));
     }
 
-    public void WeaponUpgrade(Crafting.Upgrade upgrade)
-    {
-        timeDelayStartShootMin = upgrade.timeDelayStartShootMin;
-        timeDelayStartShootMax = upgrade.timeDelayStartShootMax;
-        timeDelayShot = upgrade.timeDelayShot;
-        spread += upgrade.spread;
-        timeDelaySpray = upgrade.timeDelaySpray;
-        countBullet += upgrade.countBullet;
-        forceBullet = upgrade.bulletPower;
-        damageBullet = upgrade.damage;
-        lvlWeapon += 1;
-    }
-
     public virtual void StartShooting() { }
 
     public void Shoot() => StartCoroutine(Shoots());
 
     protected IEnumerator Shoots()
     {
-       
-        if (shootSound != null && audioSource != null)
-            audioSource.PlayOneShot(shootSound);
-
         UpgradeManager mgr = UpgradeManager.Instance;
 
         int finalDamage = CalcFinalDamage(mgr);
@@ -92,6 +66,7 @@ public class WeaponMain : MonoBehaviour
         {
             SpawnBullet(finalDamage, finalSpread, finalForce, finalPenetrate, finalReflect);
 
+            // P2: Twin Shot
             if (mgr != null && mgr.skill_P2_TwinShotChance > 0)
                 if (Random.Range(0f, 100f) < mgr.skill_P2_TwinShotChance)
                     SpawnBullet(finalDamage, finalSpread + 5f, finalForce, finalPenetrate, finalReflect);
@@ -135,6 +110,8 @@ public class WeaponMain : MonoBehaviour
 
         if (mgr.bonusExplosionChance > 0 && Random.Range(0f, 100f) < mgr.bonusExplosionChance)
         {
+            //if (explosionPrefab != null)
+            //    Destroy(Instantiate(explosionPrefab, hitPosition, Quaternion.identity), 1f);
             foreach (var col in Physics2D.OverlapCircleAll(hitPosition, 2f))
             {
                 var e = col.GetComponent<EnemyScript>();
@@ -142,13 +119,11 @@ public class WeaponMain : MonoBehaviour
                     e.RemoveHp(Mathf.RoundToInt(baseDamage * 0.5f));
             }
         }
-
         if (mgr.bonusBurnChance > 0 && Random.Range(0f, 100f) < mgr.bonusBurnChance)
         {
             var burn = hitObject.GetComponent<BurnEffect>();
             if (burn != null) burn.Refresh(); else hitObject.AddComponent<BurnEffect>();
         }
-
         if (mgr.bonusFreezeChance > 0 && Random.Range(0f, 100f) < mgr.bonusFreezeChance)
         {
             var freeze = hitObject.GetComponent<FreezeEffect>();
