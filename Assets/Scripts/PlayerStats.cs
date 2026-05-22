@@ -25,7 +25,7 @@ public class PlayerStats : MonoBehaviour
     public float maxShield;
     public int money;
     public bool isMortal;
-    GameObject cameraFollow;
+    public GameObject cameraFollow;
     public string namePlayer;
     public int playerId;
     public GameObject deadBody;
@@ -156,7 +156,7 @@ public class PlayerStats : MonoBehaviour
     public void SwapPlayer(int _playerId, Transform _placeSpawn)
     {
         GameObject _inactivePlayer = DataBase.GetInactivePlayer(playerId);
-        GameObject.Find("StartLocHead").GetComponent<StartLocScript>().CheckPoses(playerId-1, _inactivePlayer);
+        GameObject.Find("StartLocHead").GetComponent<StartLocScript>().CheckPoses(playerId, _inactivePlayer);
         playerId = _playerId;
         XmlSaver.Write(this, hand);
         GameObject player = DataBase.GetPlayer(_playerId);
@@ -377,5 +377,10 @@ public class PlayerStats : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+    public void AddCamera(GameObject _gameObject)
+    {
+        cameraFollow = _gameObject;
     }
 }

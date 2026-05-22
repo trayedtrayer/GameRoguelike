@@ -26,9 +26,9 @@ public class StartLocScript : MonoBehaviour
     public void CheckPoses(int numPl, GameObject inactive)
     {
         print(numPl);
-        if (inactivePoses[numPl].childCount == 0)
+        if (inactivePoses[numPl-1].childCount == 0)
         {
-            GameObject t = Instantiate(inactive, inactivePoses[numPl]);
+            GameObject t = Instantiate(inactive, inactivePoses[numPl-1]);
             t.transform.localPosition = new Vector3(0, 0, 0);
         }
     }

@@ -16,7 +16,9 @@ public class CameraFollowing : MonoBehaviour
         }
         else
         {
-            objectToFollow = GameObject.FindGameObjectWithTag("Player").gameObject.transform;
+            GameObject player = GameObject.FindGameObjectWithTag("Player").gameObject;
+            objectToFollow = player.transform;
+            player.GetComponent<PlayerStats>().AddCamera(gameObject);
         }
     }
 
