@@ -17,7 +17,7 @@ MonoBehaviour:
     \u0434\u0440\u043E\u0431\u043E\u0432\u0438\u043A\u0430 (+5 \u0440\u0430\u0437\u0431\u0440\u043E\u0441\u0430).
     \u0422\u0440\u0435\u0431\u0443\u0435\u0442: \u041A\u0430\u0440\u0442\u0435\u0447\u044C
     \u0443\u0440.1."
-  icon: {fileID: 0}
+  icon: {fileID: 3504556372599728608, guid: 9ac20d3c9c9834c44b1c0d9bb536653b, type: 3}
   branch: 1
   playerIdFilter: 0
   levelCosts:

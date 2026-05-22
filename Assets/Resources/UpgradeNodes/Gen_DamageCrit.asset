@@ -17,7 +17,7 @@ MonoBehaviour:
   description: "\u0428\u0430\u043D\u0441 \u043D\u0430\u043D\u0435\u0441\u0442\u0438
     \u0434\u0432\u043E\u0439\u043D\u043E\u0439 \u0443\u0440\u043E\u043D. \u0422\u0440\u0435\u0431\u0443\u0435\u0442:
     \u0421\u0438\u043B\u0430 \u0443\u0434\u0430\u0440\u0430 \u0443\u0440.2."
-  icon: {fileID: 0}
+  icon: {fileID: 6674386295937086461, guid: ec4721c7690756d4db534e04711931f3, type: 3}
   branch: 0
   playerIdFilter: 0
   levelCosts:
