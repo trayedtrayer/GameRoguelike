@@ -48,4 +48,4 @@ MonoBehaviour:
     sprite: {fileID: -3786013358620048933, guid: 3e5db1617b47a6f428ede17483a17b93, type: 3}
     countItem: 2
     nameItem: Iron
-    classRes: 0
+    classRes: 1

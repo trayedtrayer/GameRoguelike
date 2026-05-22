@@ -30,7 +30,6 @@ public class PlayerStats : MonoBehaviour
     public int playerId;
     public GameObject deadBody;
 
-    // Базовые значения (до бонусов прокачки), задаются в инспекторе
     [Header("Базовые значения (до прокачки)")]
     public int baseMaxHp;
     public float baseMaxShield;
@@ -56,8 +55,6 @@ public class PlayerStats : MonoBehaviour
         Player.playerObject = gameObject;
         listItems = new List<DataBase.Item>();
         Time.timeScale = 1;
-
-        // Запоминаем базовые значения из инспектора
         if (baseMaxHp == 0) baseMaxHp = maxHp;
         if (baseMaxShield == 0) baseMaxShield = maxShield;
     }
@@ -78,8 +75,6 @@ public class PlayerStats : MonoBehaviour
         {
             GetComponentInChildren<Hand>().SetActiveWeapon(0);
         }
-
-        // Применяем уже сохранённые бонусы прокачки (если UpgradeManager уже загружен)
         if (UpgradeManager.Instance != null)
             UpgradeManager.Instance.ApplyBonusesToPlayer(this);
     }
@@ -98,8 +93,6 @@ public class PlayerStats : MonoBehaviour
 
         GetComponentInChildren<Hand>().CreateWeaponForSave(DataBase.GetWeapon(stats.weaponOneName), 0);
         GetComponentInChildren<Hand>().CreateWeaponForSave(DataBase.GetWeapon(stats.weaponTwoName), 1);
-
-        // Загружаем данные прокачки в UpgradeManager
         if (UpgradeManager.Instance != null && stats.upgradeLevels != null)
         {
             UpgradeManager.Instance.LoadFromSave(
@@ -112,11 +105,6 @@ public class PlayerStats : MonoBehaviour
         RefreshTexts();
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // ПРИМЕНЕНИЕ БОНУСОВ ОТ ПРОКАЧКИ
-    // Вызывается из UpgradeManager после каждой покупки и при загрузке.
-    // ─────────────────────────────────────────────────────────────────────────
-
     public void ApplyUpgradeBonuses(int bonusMaxHp, float bonusShieldMax, float bonusShieldRegeneration)
     {
         maxHp = baseMaxHp + bonusMaxHp;
@@ -127,9 +115,6 @@ public class PlayerStats : MonoBehaviour
         RefreshTexts();
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // ЛЕВЕЛАП — теперь даёт ОЧКО РАЗВИТИЯ, а не карточку
-    // ─────────────────────────────────────────────────────────────────────────
 
     void AddExp(int _exp)
     {
@@ -142,25 +127,15 @@ public class PlayerStats : MonoBehaviour
             int temp = _exp - (expForNewLvl - exp);
             exp = temp;
             level += 1;
-            expForNewLvl = Mathf.RoundToInt(expForNewLvl * 1.15f); // масштаб XP для следующего уровня
+            expForNewLvl = Mathf.RoundToInt(expForNewLvl * 1.15f);
 
-            // ── НОВОЕ: выдаём очко развития вместо карточки ──────────────
             if (UpgradeManager.Instance != null)
                 UpgradeManager.Instance.AddDevelopmentPoint();
-            // ─────────────────────────────────────────────────────────────
 
             Debug.Log($"[PlayerStats] Уровень {level}! Очков развития: {UpgradeManager.Instance?.developmentPoints}");
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // РАСХОД ПРЕДМЕТОВ (нужен UpgradeManager для покупки апгрейдов)
-    // ─────────────────────────────────────────────────────────────────────────
-
-    /// <summary>
-    /// Списывает предметы из инвентаря игрока.
-    /// Вызывается из UpgradeManager.TryPurchase.
-    /// </summary>
     public void SpendItems(List<DataBase.Item> itemsToSpend)
     {
         foreach (var cost in itemsToSpend)
@@ -178,14 +153,10 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // ОСТАЛЬНОЕ (без изменений)
-    // ─────────────────────────────────────────────────────────────────────────
-
     public void SwapPlayer(int _playerId, Transform _placeSpawn)
     {
         GameObject _inactivePlayer = DataBase.GetInactivePlayer(playerId);
-        GameObject.Find("StartLocHead").GetComponent<StartLocScript>().CheckPoses(playerId, _inactivePlayer);
+        GameObject.Find("StartLocHead").GetComponent<StartLocScript>().CheckPoses(playerId-1, _inactivePlayer);
         playerId = _playerId;
         XmlSaver.Write(this, hand);
         GameObject player = DataBase.GetPlayer(_playerId);
@@ -274,6 +245,7 @@ public class PlayerStats : MonoBehaviour
     public void CompleteLevel() { currentLvl += 1; }
     public int GetPlayerId() => playerId;
     public void ChangePlayerId(int _playerId) { playerId = _playerId; }
+    public void AddMoney(int _countMoney) { money += _countMoney;  }
 
     public void RefreshTexts()
     {
@@ -297,15 +269,14 @@ public class PlayerStats : MonoBehaviour
 
     public void SetPlayerText(int _idPlayer)
     {
-        textWeapon.text = _idPlayer == -1
-            ? ""
-            : "Press E to play for " + DataBase.GetPlayer(_idPlayer).GetComponent<PlayerStats>().namePlayer;
+        textWeapon.text = _idPlayer == -1 ? "" : "Press E to play for " + DataBase.GetPlayer(_idPlayer).GetComponent<PlayerStats>().namePlayer;
     }
 
-    public void AddFunds(int _exp, int _hp)
+    public void AddFunds(int _exp, int _hp, int _money)
     {
         AddHp(_hp);
         AddExp(_exp);
+        AddMoney(_money);
         RefreshTexts();
     }
 
@@ -334,18 +305,6 @@ public class PlayerStats : MonoBehaviour
             }
         }
         listItems.Add(_item);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.GetComponent<MagneticObjects>())
-        {
-            AddFunds(collision.GetComponent<MagneticObjects>().expAdd,
-                     collision.GetComponent<MagneticObjects>().hpAdd);
-            if (collision.GetComponent<ItemScript>())
-                AddItem(collision.GetComponent<ItemScript>().item);
-            Destroy(collision.gameObject);
-        }
     }
 
     public int GetMoneyCount() => money;

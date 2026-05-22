@@ -1,40 +1,48 @@
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Crafting : MonoBehaviour
 {
-    public class Upgrade
+    public class CraftRecipe
     {
-        public int damage;
-        public float timeDelayStartShootMin;
-        public float timeDelayStartShootMax;
-        public float timeDelayShot;
-        public float spread;
-        public float timeDelaySpray;
-        public int countBullet;
-        public int bulletPower;
-        public Color color;
-        public int type;
         public WeaponMain weapon;
         public int money;
         public List<DataBase.Item> items = new List<DataBase.Item>();
+        public Color rarityColor;
+        public int rarityIndex;
+        public string description;
+        public GameObject instance;
     }
 
-    //1 2 3 4 5 6
-    List<Upgrade> upgrade;
-    public GameObject parentOfCrafts;
-    public GameObject prefabUiCraft;
+    [Header("Окно крафта")]
     public GameObject mainWindow;
-    public GameObject nameWindow;
-    public GameObject descriptionCraft;
-    public TextMeshProUGUI goldMoneyCount;
-    public TextMeshProUGUI silverMoneyCount;
-    public GameObject itemWindow;
-    public GameObject prefabItem;
-    PlayerStats playerStats;
+
+    [Header("Сетка рецептов")]
+    public Transform recipeGrid;
+    public GameObject recipeCardPrefab;
+
+    [Header("Панель деталей")]
+    public GameObject detailPanel;
+    public TextMeshProUGUI detailWeaponName;
+    public TextMeshProUGUI detailStats;
+    public TextMeshProUGUI detailCost;
+    public TextMeshProUGUI detailRarity;
+    public Image detailWeaponIcon;
+    public Button craftButton;
+    public TextMeshProUGUI craftButtonText;
+
+    [Header("Инвентарь (для показа стоимости)")]
+    public TextMeshProUGUI goldText;
+    public TextMeshProUGUI silverText;
+
+    private List<CraftRecipe> recipes = new List<CraftRecipe>();
+    private CraftRecipe selected;
+    private PlayerStats ps;
+    private bool isOpen = false;
+    private List<GameObject> cards = new List<GameObject>();
+    bool isGenerated;
 
     private void Awake()
     {
@@ -43,120 +51,192 @@ public class Crafting : MonoBehaviour
 
     private void Start()
     {
-        SetWeaponsToCraft();
+        ps = Player.playerObject?.GetComponent<PlayerStats>();
         Close();
-        playerStats = Player.playerObject.GetComponent<PlayerStats>();
+        GenerateRecipes();
+        craftButton.onClick.AddListener(OnCraftClicked);
     }
 
-    public void SetWeaponsToCraft()
+    private void Update()
     {
-        List<GameObject> weapons = DataBase.weapons;
-        foreach (GameObject weapon in weapons)
-        {
-            WeaponMain weaponMain = weapon.GetComponentInChildren<WeaponMain>();
-            CraftUpgradeData data = CraftSystem.GenerateUpgrade(weaponMain);
-            Upgrade upgrade = new Upgrade();
-            upgrade.damage = data.damage;
-            upgrade.timeDelayShot = data.timeDelayShot;
-            upgrade.timeDelayStartShootMin = data.timeDelayStartShootMin;
-            upgrade.timeDelayStartShootMax = data.timeDelayStartShootMax;
-            upgrade.spread = data.spread;
-            upgrade.timeDelaySpray = data.timeDelaySpray;
-            upgrade.countBullet = data.countBullet;
-            upgrade.bulletPower = data.bulletPower;
-            upgrade.money = data.money;
-            upgrade.items = data.requiredItems;
-            upgrade.weapon = data.weapon;
-            upgrade.type = data.type;
-            upgrade.color = data.rarityColor;
-            GameObject t = Instantiate(prefabUiCraft, parentOfCrafts.transform);
-            t.GetComponent<UiForCraft>().upgrade = upgrade;
-            t.GetComponent<UiForCraft>().crafter = this;
-            t.GetComponent<Image>().color = upgrade.color;
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.GetComponent<PlayerStats>())
-        {
+        if (!isOpen && Input.GetKeyDown(KeyCode.K))
             Open();
+        else if (isOpen && Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.K))
+            Close();
+    }
+
+    private void GenerateRecipes()
+    {
+        if (!isGenerated)
+        {
+            recipes.Clear();
+            foreach (var go in DataBase.weapons)
+            {
+                if (!WeaponStorage.InstanceWeaponStorage.HasWeapon(go.GetComponentInChildren<WeaponMain>().weaponName))
+                {
+                    var wm = go.GetComponentInChildren<WeaponMain>();
+                    if (wm == null) continue;
+
+                    CraftUpgradeData data = CraftSystem.GenerateUpgrade(wm);
+                    var r = new CraftRecipe
+                    {
+                        weapon = data.weapon,
+                        money = data.money,
+                        items = data.requiredItems,
+                        rarityColor = data.rarityColor,
+                        rarityIndex = data.rarityIndex,
+                        description = BuildDescription(wm)
+                    };
+                    recipes.Add(r);
+                }
+            }
+            BuildCards();
+            isGenerated = true;
+        }
+        else
+        {
+
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void BuildCards()
     {
-        if (collision.GetComponent<PlayerStats>())
+        foreach (var c in cards) if (c != null) Destroy(c);
+        cards.Clear();
+
+        foreach (var recipe in recipes)
         {
-            Close();
+            var go = Instantiate(recipeCardPrefab, recipeGrid);
+            var ui = go.GetComponent<UiForCraft>();
+
+            if (ui != null)
+            {
+                ui.Init(recipe);
+                var capturedRecipe = recipe;
+                capturedRecipe.instance = go.gameObject;
+                ui.onCardClicked = () => SelectRecipe(capturedRecipe);
+                ui.onCardHoverEnter = () =>
+                {
+                    selected = capturedRecipe;
+                    detailPanel.SetActive(true);
+                    RefreshDetailPanel();
+                };
+                ui.onCardHoverExit = () =>
+                {
+
+                };
+            }
+            var img = go.GetComponent<Image>();
+            if (img != null) img.color = recipe.rarityColor;
+
+            cards.Add(go);
         }
+    }
+
+    public void SelectRecipe(CraftRecipe recipe)
+    {
+        selected = recipe;
+        detailPanel.SetActive(true);
+        RefreshDetailPanel();
+    }
+
+    private void RefreshDetailPanel()
+    {
+        if (selected == null) return;
+
+        var w = selected.weapon;
+
+        detailWeaponName.text = w.weaponName;
+        if (detailWeaponIcon != null && w.spriteWeapon != null)
+            detailWeaponIcon.sprite = w.spriteWeapon;
+
+        detailStats.text = BuildDescription(w);
+        detailCost.text = BuildCostString(selected);
+
+        bool canCraft = CanCraft(selected);
+        craftButton.interactable = canCraft;
+        craftButtonText.text = canCraft ? "Скрафтить" : "Не хватает ресурсов";
+    }
+
+    private void OnCraftClicked()
+    {
+        if (selected == null || ps == null) return;
+        if (!CanCraft(selected)) return;
+        ps.SpendItems(selected.items);
+        ps.money -= selected.money;
+        WeaponStorage.InstanceWeaponStorage?.AddWeapon(selected.weapon.weaponName);
+        RefreshMoneyUI();
+        RefreshDetailPanel();
+        Destroy(selected.instance);
+        Debug.Log($"[Crafting] Скрафтено: {selected.weapon.weaponName}");
+    }
+
+    private bool CanCraft(CraftRecipe r)
+    {
+        if (ps == null) return false;
+        return ps.CheckForMoneyItems(r.items, r.money);
     }
 
     public void Open()
     {
-        for (int i = 0; i < parentOfCrafts.transform.childCount; i++)
-        {
-            parentOfCrafts.transform.GetChild(i).gameObject.SetActive(true);
-        }
+        isOpen = true;
+        mainWindow.transform.parent.gameObject.SetActive(true);
         mainWindow.SetActive(true);
+        detailPanel.SetActive(false);
+        selected = null;
+        ps = Player.playerObject?.GetComponent<PlayerStats>();
+        RefreshMoneyUI();
+        GenerateRecipes();
+        Time.timeScale = 0f;
     }
+
     public void Close()
     {
-        for (int i = 0; i < parentOfCrafts.transform.childCount; i++)
-        {
-            parentOfCrafts.transform.GetChild(i).gameObject.SetActive(false);
-        }
+        isOpen = false;
         mainWindow.SetActive(false);
+        mainWindow.transform.parent.gameObject.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     public void Reopen()
     {
-        playerStats.RespawnWeapon();
-        for (int i = 0; i < parentOfCrafts.transform.childCount; i++)
-        {
-            Destroy(parentOfCrafts.transform.GetChild(i).gameObject);
-        }
-        SetWeaponsToCraft();
+        Close();
         Open();
-
     }
 
-    public void ShowName(string _name, int money, List<DataBase.Item> items)
+    private void RefreshMoneyUI()
     {
-        nameWindow.SetActive(true);
-        nameWindow.GetComponentInChildren<TextMeshProUGUI>().text = _name;
-        int[] _money;
-        _money = PlayerStats.ReturnSilverGold(money);
-        goldMoneyCount.text = "" + _money[0];
-        silverMoneyCount.text = "" + _money[1];
-        if (itemWindow.transform.childCount == 0)
+        if (ps == null) return;
+        int[] golds = PlayerStats.ReturnSilverGold(ps.money);
+        if (goldText != null) goldText.text = "" + golds[0];
+        if (silverText != null) silverText.text = "" + golds[1];
+    }
+
+    private string BuildDescription(WeaponMain w)
+    {
+        var sb = new System.Text.StringBuilder();
+        sb.AppendLine($"Урон:       {w.damageBullet}");
+        sb.AppendLine($"Пуль:       {w.countBullet}");
+        sb.AppendLine($"Разброс:    {w.spread:0.0}");
+        sb.AppendLine($"Задержка:   {w.timeDelayShot:0.000}");
+        sb.AppendLine($"Скорость:   {w.forceBullet:0}");
+        if (w.timeDelayStartShootMax > 0)
+            sb.AppendLine($"Прогрев:    {w.timeDelayStartShootMin:0.0}–{w.timeDelayStartShootMax:0.0}");
+        if (w.lvlWeapon > 0) sb.AppendLine($"Уровень:    {w.lvlWeapon}");
+        return sb.ToString().TrimEnd();
+    }
+
+    private string BuildCostString(CraftRecipe r)
+    {
+        var sb = new System.Text.StringBuilder();
+        if (r.money > 0)
         {
-            for (int i = 0; i < items.Count; i++)
-            {
-                GameObject t = Instantiate(prefabItem, itemWindow.transform);
-                t.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = " " + items[i].countItem;
-                t.GetComponent<Image>().sprite = items[i].GetSprite();
-            }
+            int[] golds = PlayerStats.ReturnSilverGold(r.money);
+            sb.AppendLine($"Золото: {golds[0]}  Серебро: {golds[1]}");
         }
-    }
-
-    public void StopShowName()
-    {
-        nameWindow.SetActive(false);
-        for (int i = 0; i < itemWindow.transform.childCount; i++)
-        {
-            Destroy(itemWindow.transform.GetChild(i).gameObject);
-        }
-    }
-
-    public void ShowDescription(string _description)
-    {
-        descriptionCraft.SetActive(true);
-        descriptionCraft.GetComponentInChildren<TextMeshProUGUI>().text = _description;
-    }
-
-    public void StopShowDescription()
-    {
-        descriptionCraft.SetActive(false);
+        if (r.items != null)
+            foreach (var item in r.items)
+                sb.AppendLine($"{item.nameItem}  ×{item.countItem}");
+        return sb.ToString().TrimEnd();
     }
 }

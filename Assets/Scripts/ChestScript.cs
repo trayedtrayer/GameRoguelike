@@ -8,7 +8,7 @@ public class ChestScript : MonoBehaviour
     public GameObject chestGrid;
     public GameObject chestBg;
     public GameObject prefabChestUi;
-    public GameObject nameWindow;
+    public TextMeshProUGUI textItem;
     public TextMeshProUGUI goldMoneyCount;
     public TextMeshProUGUI silverMoneyCount;
     PlayerStats playerStats;
@@ -32,7 +32,6 @@ public class ChestScript : MonoBehaviour
         int[] money = playerStats.ReturnSilverGold();
         goldMoneyCount.text = "" + money[0];
         silverMoneyCount.text = "" + money[1];
-        nameWindow.SetActive(true);
     }
     public void CloseChest()
     {
@@ -40,11 +39,11 @@ public class ChestScript : MonoBehaviour
     }
     public void ShowName(string name)
     {
-        nameWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "" + name;
+        textItem.text = "" + name;
     }
     public void StopShowName()
     {
-
+        textItem.text = "";
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

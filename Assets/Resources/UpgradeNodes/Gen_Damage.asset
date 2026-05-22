@@ -21,9 +21,7 @@ MonoBehaviour:
   playerIdFilter: 0
   levelCosts:
   - levelPoints: 1
-    items:
-    - itemName: "\u0416\u0435\u043B\u0435\u0437\u043E"
-      count: 3
+    items: []
   - levelPoints: 1
     items: []
   - levelPoints: 2

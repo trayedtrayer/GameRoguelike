@@ -44,19 +44,6 @@ public class WeaponMain : MonoBehaviour
         damageBullet *= Mathf.CeilToInt(1 + (0.2f * lvlWeapon));
     }
 
-    public void WeaponUpgrade(Crafting.Upgrade upgrade)
-    {
-        timeDelayStartShootMin = upgrade.timeDelayStartShootMin;
-        timeDelayStartShootMax = upgrade.timeDelayStartShootMax;
-        timeDelayShot = upgrade.timeDelayShot;
-        spread += upgrade.spread;
-        timeDelaySpray = upgrade.timeDelaySpray;
-        countBullet += upgrade.countBullet;
-        forceBullet = upgrade.bulletPower;
-        damageBullet = upgrade.damage;
-        lvlWeapon += 1;
-    }
-
     public virtual void StartShooting() { }
 
     public void Shoot() => StartCoroutine(Shoots());
@@ -110,7 +97,6 @@ public class WeaponMain : MonoBehaviour
             ebs.SetSettings(damage, penetrate, timeDestroy, isPushing, isBreaking, bullet);
     }
 
-    // Вызывается из BulletScript при попадании
     public void OnBulletHit(GameObject hitObject, int baseDamage, Vector3 hitPosition)
     {
         UpgradeManager mgr = UpgradeManager.Instance;
@@ -119,11 +105,9 @@ public class WeaponMain : MonoBehaviour
         EnemyScript enemy = hitObject.GetComponent<EnemyScript>();
         if (enemy == null) return;
 
-        // Крит
         if (mgr.bonusCritChancePercent > 0 && Random.Range(0f, 100f) < mgr.bonusCritChancePercent)
             enemy.RemoveHp(baseDamage);
 
-        // Взрыв
         if (mgr.bonusExplosionChance > 0 && Random.Range(0f, 100f) < mgr.bonusExplosionChance)
         {
             //if (explosionPrefab != null)
@@ -135,15 +119,11 @@ public class WeaponMain : MonoBehaviour
                     e.RemoveHp(Mathf.RoundToInt(baseDamage * 0.5f));
             }
         }
-
-        // Поджог
         if (mgr.bonusBurnChance > 0 && Random.Range(0f, 100f) < mgr.bonusBurnChance)
         {
             var burn = hitObject.GetComponent<BurnEffect>();
             if (burn != null) burn.Refresh(); else hitObject.AddComponent<BurnEffect>();
         }
-
-        // Заморозка
         if (mgr.bonusFreezeChance > 0 && Random.Range(0f, 100f) < mgr.bonusFreezeChance)
         {
             var freeze = hitObject.GetComponent<FreezeEffect>();

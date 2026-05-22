@@ -15,7 +15,7 @@ public class Hand : MonoBehaviour
     public float TimeCooldown;
     public SpriteRenderer skin;
     public SpriteRenderer weapon;
-    public GameObject weaponToTake;
+    private GameObject weaponToTake;
     public Image weaponOneImage;
     public Image weaponTwoImage;
     // Update is called once per frame

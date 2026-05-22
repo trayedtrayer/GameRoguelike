@@ -18,7 +18,7 @@ public class StartLocScript : MonoBehaviour
         }
         else
         {
-            Instantiate(DataBase.GetPlayer(0), spawnPlace.transform.position, spawnPlace.transform.rotation);
+            Instantiate(DataBase.GetPlayer(2), spawnPlace.transform.position, spawnPlace.transform.rotation);
         }
         SetAllPosesWithoutPlayer();
     }
@@ -36,12 +36,13 @@ public class StartLocScript : MonoBehaviour
     public void SetAllPosesWithoutPlayer()
     {
         int ourId = XmlSaver.Read() == null ? 0 : XmlSaver.Read().idPlayer;
-        for (int i = 0; i < inactivePoses.Count; i++)
+        for (int i = 1; i < inactivePoses.Count+1; i++)
         {
             if (ourId != i)
             {
+                print("++++" + i + "+++++++");
                 GameObject _inactivePlayer = DataBase.GetInactivePlayer(i);
-                GameObject t = Instantiate(_inactivePlayer, inactivePoses[i]);
+                GameObject t = Instantiate(_inactivePlayer, inactivePoses[i-1]);
                 t.transform.localPosition = new Vector3(0, 0, 0);
             }
         }
