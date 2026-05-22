@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7150688976069415650}
   - component: {fileID: 1065614042402798110}
   m_Layer: 0
-  m_Name: Iron
+  m_Name: pouch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemScript
   item:
-    sprite: {fileID: -3786013358620048933, guid: 3e5db1617b47a6f428ede17483a17b93, type: 3}
+    sprite: {fileID: -5615797662902086626, guid: 2242b29afa26bae4ca744fc39513a133, type: 3}
     countItem: 1
-    nameItem: "\u0416\u0435\u043B\u0435\u0437\u043E"
-    classRes: 0
+    nameItem: "\u041C\u0435\u0448\u043E\u0447\u0435\u043A"
+    classRes: 1
