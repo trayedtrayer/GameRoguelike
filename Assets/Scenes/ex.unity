@@ -281,9 +281,10 @@ GameObject:
   - component: {fileID: 171999578}
   - component: {fileID: 171999576}
   - component: {fileID: 171999577}
-  m_Layer: 0
+  - component: {fileID: 171999579}
+  m_Layer: 7
   m_Name: WallUD
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -397,6 +398,44 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2068506339}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!19719996 &171999579
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171999575}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1 &387931745
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,9 +447,10 @@ GameObject:
   - component: {fileID: 387931748}
   - component: {fileID: 387931746}
   - component: {fileID: 387931747}
-  m_Layer: 0
+  - component: {fileID: 387931749}
+  m_Layer: 7
   m_Name: WallRL
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -524,6 +564,44 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2068506339}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!19719996 &387931749
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387931745}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1 &992108734
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,9 +644,10 @@ GameObject:
   - component: {fileID: 1151049724}
   - component: {fileID: 1151049722}
   - component: {fileID: 1151049723}
-  m_Layer: 0
+  - component: {fileID: 1151049725}
+  m_Layer: 7
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -682,6 +761,44 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2068506339}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!19719996 &1151049725
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151049721}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1 &1303405498
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,6 +881,22 @@ PrefabInstance:
     - target: {fileID: 741267358024246340, guid: d1b9c7b4d7705a041835a9f3a4105e13, type: 3}
       propertyPath: m_Name
       value: Pool
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792216792457040216, guid: d1b9c7b4d7705a041835a9f3a4105e13, type: 3}
+      propertyPath: itemsPool.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792216792457040216, guid: d1b9c7b4d7705a041835a9f3a4105e13, type: 3}
+      propertyPath: itemsPool.Array.data[1].poolSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792216792457040216, guid: d1b9c7b4d7705a041835a9f3a4105e13, type: 3}
+      propertyPath: itemsPool.Array.data[1].prefabPool
+      value: 
+      objectReference: {fileID: 4082074386870515803, guid: 460bacaadb1bab643800507def661701, type: 3}
+    - target: {fileID: 4792216792457040216, guid: d1b9c7b4d7705a041835a9f3a4105e13, type: 3}
+      propertyPath: itemsPool.Array.data[1].maxPoolSize
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -928,11 +1061,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c0b5a08d7fb2d64ebe50fb7d6841f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldGeneration
-  worldX: 150
-  worldY: 150
-  minRoom: 8
-  maxRoom: 16
-  countCenterPointRoom: 10
+  worldX: 75
+  worldY: 75
+  minRoom: 5
+  maxRoom: 9
+  countCenterPointRoom: 5
   netWeightRoom: 0
   tilemapWall: {fileID: 1151049722}
   tilemapWallRL: {fileID: 387931746}
@@ -946,7 +1079,7 @@ MonoBehaviour:
   tunnelWidth: 3
   portal: {fileID: 4434252999220571619, guid: 9dfdc51bed550af46bdee87473be0e16, type: 3}
   portalOnStart: {fileID: 4434252999220571619, guid: 9dfdc51bed550af46bdee87473be0e16, type: 3}
-  lvl: 200
+  lvl: 40
   enemy:
   - costSpawn: 1
     enemy: {fileID: 5372332452932671164, guid: d49d8e2a9d424544ab1981a8b9aed1b5, type: 3}
