@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -136,5 +137,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    public void Apply(float bonusSpeedPercent)
+    {
+        speed = bonusSpeedPercent == 0 ? speed : speed * (1 + bonusSpeedPercent / 100f);
+    }
 }

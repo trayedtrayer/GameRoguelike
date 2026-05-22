@@ -210,6 +210,7 @@ public class UpgradeManager : MonoBehaviour
     {
         if (ps == null) return;
         ps.ApplyUpgradeBonuses(bonusMaxHp, bonusShieldMax, bonusShieldRegenSpeed);
+        ps.GetComponent<PlayerController>().Apply(bonusSpeedPercent);
     }
 
     private List<DataBase.Item> ConvertCost(List<ItemCost> costs)

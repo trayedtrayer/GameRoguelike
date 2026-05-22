@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7150688976069415650}
   - component: {fileID: 1065614042402798110}
   m_Layer: 0
-  m_Name: Iron
+  m_Name: ore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemScript
   item:
-    sprite: {fileID: -3786013358620048933, guid: 3e5db1617b47a6f428ede17483a17b93, type: 3}
-    countItem: 1
-    nameItem: "\u0416\u0435\u043B\u0435\u0437\u043E"
-    classRes: 0
+    sprite: {fileID: 4621740753562235160, guid: 9bb28dbb94293f243b870af8e6d8a3dd, type: 3}
+    countItem: 2
+    nameItem: "\u0421\u0442\u0430\u043B\u044C"
+    classRes: 1

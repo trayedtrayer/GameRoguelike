@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7150688976069415650}
   - component: {fileID: 1065614042402798110}
   m_Layer: 0
-  m_Name: Iron 2
+  m_Name: death_scythe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemScript
   item:
-    sprite: {fileID: -3786013358620048933, guid: 3e5db1617b47a6f428ede17483a17b93, type: 3}
-    countItem: 2
-    nameItem: Iron
-    classRes: 0
+    sprite: {fileID: -816586530402693068, guid: 109e72a7403220940a585363fb255be0, type: 3}
+    countItem: 1
+    nameItem: "\u041A\u043E\u0441\u0430 \u0440\u0430\u0437\u0440\u0443\u0448\u0435\u043D\u0438\u044F"
+    classRes: 3

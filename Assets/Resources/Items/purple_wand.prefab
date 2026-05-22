@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7150688976069415650}
   - component: {fileID: 1065614042402798110}
   m_Layer: 0
-  m_Name: Iron 4
+  m_Name: purple_wand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemScript
   item:
-    sprite: {fileID: -3786013358620048933, guid: 3e5db1617b47a6f428ede17483a17b93, type: 3}
-    countItem: 2
-    nameItem: Iron
-    classRes: 0
+    sprite: {fileID: 2450817535846566672, guid: a009509a37b52d649ad9b0cd2176bc30, type: 3}
+    countItem: 1
+    nameItem: "\u041F\u043E\u0441\u043E\u0445"
+    classRes: 2
