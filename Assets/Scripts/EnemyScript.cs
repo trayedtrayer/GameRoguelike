@@ -37,11 +37,14 @@ public class EnemyScript : MonoBehaviour
     public void Dead()
     {
         Instantiate(deadBody, transform.position, transform.rotation);
-        GameObject t = Instantiate(randItem, transform.position, transform.rotation);
-        t.GetComponent<ItemScript>().SetItem(DataBase.ReturnRandomItem());
+        if (Random.Range(0, 101) > 50 + UpgradeManager.Instance.bonusDropPercent)
+        {
+            GameObject t = Instantiate(randItem, transform.position, transform.rotation);
+            t.GetComponent<ItemScript>().SetItem(DataBase.ReturnRandomItem());
+            t.GetComponent<MagneticObjects>().SetSettings(Random.Range(1, 10), Mathf.FloorToInt(UpgradeManager.Instance.bonusHpRegenPerKill), Random.Range(1, 2));
+        }
         mozg.EnemyKill();
         Destroy(gameObject);
-
     }
 
     public void SetFound()

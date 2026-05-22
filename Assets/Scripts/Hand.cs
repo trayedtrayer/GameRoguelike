@@ -166,9 +166,15 @@ public class Hand : MonoBehaviour
         isCooldown = false;
     }
 
-    void SetSprites()
-    {
-        weaponOneImage.sprite = GunOne.GetComponentInChildren<WeaponMain>().spriteWeapon;
-        weaponTwoImage.sprite = GunTwo.GetComponentInChildren<WeaponMain>().spriteWeapon;
+   public string GetNameActiveWeapon()
+   {
+        if(activeWeapon == 0)
+        {
+            return GunOne.GetComponent<WeaponMain>().weaponName;
+        }
+        else
+        {
+            return GunTwo.GetComponent<WeaponMain>().weaponName;
+        }
     }
 }

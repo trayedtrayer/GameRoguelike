@@ -1282,6 +1282,9 @@ MonoBehaviour:
   contentGeneral: {fileID: 6443852158621550402}
   contentWeapon: {fileID: 2399565016441920136}
   contentSpecial: {fileID: 4171294802561494812}
+  ScrollViewGeneral: {fileID: 5625745172381421891}
+  ScrollViewWeapon: {fileID: 5195745931432958119}
+  ScrollViewSpecial: {fileID: 7925085073190235713}
   upgradeNodePrefab: {fileID: 5312669122133167071, guid: aaea34026dc1a3f4abd3685ed30e91ff, type: 3}
   pointsText: {fileID: 5556580159219227684}
   detailPanel: {fileID: 7544329297746869430}
@@ -1454,7 +1457,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7925085073190235713
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4614,7 +4617,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2814105056687567069}
   m_HandleRect: {fileID: 8861699519877967330}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -13363,7 +13366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5195745931432958119
 RectTransform:
   m_ObjectHideFlags: 0

@@ -19,6 +19,11 @@ public class UpgradeUI : MonoBehaviour
     public Transform contentWeapon;
     public Transform contentSpecial;
 
+    [Header("ScrollView")]
+    public Transform ScrollViewGeneral;
+    public Transform ScrollViewWeapon;
+    public Transform ScrollViewSpecial;
+
     [Header("Префаб карточки апгрейда")]
     public GameObject upgradeNodePrefab;
 
@@ -87,9 +92,9 @@ public class UpgradeUI : MonoBehaviour
     {
         currentBranch = branch;
 
-        contentGeneral.gameObject.SetActive(branch == UpgradeBranch.General);
-        contentWeapon.gameObject.SetActive(branch == UpgradeBranch.Weapon);
-        contentSpecial.gameObject.SetActive(branch == UpgradeBranch.Special);
+        ScrollViewGeneral.gameObject.SetActive(branch == UpgradeBranch.General);
+        ScrollViewWeapon.gameObject.SetActive(branch == UpgradeBranch.Weapon);
+        ScrollViewSpecial.gameObject.SetActive(branch == UpgradeBranch.Special);
 
         // Подсветка активной вкладки
         SetTabActive(tabGeneral, branch == UpgradeBranch.General);

@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: 90}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 10.7658, y: 92.5}
+  m_SizeDelta: {x: 288.0131, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2742382282175197244
 CanvasRenderer:
@@ -92,10 +92,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 40.25
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -246,8 +246,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: 45}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 4.7255, y: 45.8629}
+  m_SizeDelta: {x: 300.0909, y: 48.2743}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4712881372707122485
 CanvasRenderer:
@@ -444,4 +444,3 @@ MonoBehaviour:
   levelText: {fileID: 5615396007301616108}
   iconImage: {fileID: 6020964425155492425}
   backgroundImage: {fileID: 3978518435703512898}
-  levelDots: []

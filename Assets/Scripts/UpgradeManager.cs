@@ -162,6 +162,7 @@ public class UpgradeManager : MonoBehaviour
         bonusShotgunCountBullet = 0;
         bonusPenetration = bonusReflect = false;
         bonusExplosionChance = bonusBurnChance = bonusFreezeChance = 0;
+        bonusSpeedPercent = 0f;
         skill_P1_BerserkMode = skill_P1_IronSkin = skill_P2_ShadowStep = false;
         skill_P2_TwinShotChance = 0;
         foreach (var node in allNodes)
