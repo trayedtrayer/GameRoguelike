@@ -28,7 +28,8 @@ MonoBehaviour:
       count: 50
     - itemName: "\u0416\u0435\u043B\u0435\u0437\u043E"
       count: 50
-    - itemName: "\u0414\u0435\u043D\u044C\u0433\u0438"
+    - itemName: "\u0414\u0435\u043D\u044C\u0433\u0438 \u0440\u0430\u0437\u0440\u0443\u0448\u0435\u043D\u043D\u043E\u0433\u043E
+        \u043C\u0438\u0440\u0430"
       count: 50
   valuesPerLevel:
   - 1

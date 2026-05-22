@@ -27,7 +27,8 @@ MonoBehaviour:
       count: 15
     - itemName: "\u0416\u0435\u043B\u0435\u0437\u043E"
       count: 15
-    - itemName: "\u0414\u0435\u043D\u044C\u0433\u0438"
+    - itemName: "\u0414\u0435\u043D\u044C\u0433\u0438 \u0440\u0430\u0437\u0440\u0443\u0448\u0435\u043D\u043D\u043E\u0433\u043E
+        \u043C\u0438\u0440\u0430"
       count: 15
   - levelPoints: 3
     items:
@@ -35,7 +36,8 @@ MonoBehaviour:
       count: 20
     - itemName: "\u0416\u0435\u043B\u0435\u0437\u043E"
       count: 20
-    - itemName: "\u0414\u0435\u043D\u044C\u0433\u0438"
+    - itemName: "\u0414\u0435\u043D\u044C\u0433\u0438 \u0440\u0430\u0437\u0440\u0443\u0448\u0435\u043D\u043D\u043E\u0433\u043E
+        \u043C\u0438\u0440\u0430"
       count: 20
   valuesPerLevel:
   - 5
