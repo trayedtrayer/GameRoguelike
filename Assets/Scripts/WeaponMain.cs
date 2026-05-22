@@ -140,7 +140,9 @@ public class WeaponMain : MonoBehaviour
     private int CalcFinalDamage(UpgradeManager mgr)
     {
         if (mgr == null) return damageBullet;
-        float dmg = damageBullet * (1f + mgr.bonusDamagePercent / 100f);
+        print(damageBullet * (1f + mgr.bonusDamagePercent / 100f));
+        float dmg = 1f + damageBullet * (1f + mgr.bonusDamagePercent / 100f);
+        print(dmg);
         if (type == TypeWeapon.rifle) dmg *= 1f + mgr.bonusRifleDamagePercent / 100f;
         return Mathf.Max(1, Mathf.CeilToInt(dmg));
     }

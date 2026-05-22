@@ -52,7 +52,7 @@ public class EnemyWeapon : MonoBehaviour
     {
         if (player != null)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, player.position - transform.position, 10f, layerMask);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, player.position - transform.position, 6f, layerMask);
             // Debug.DrawRay(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position - transform.position, Color.blue, 2f);
             if (hit.collider != null)
             {

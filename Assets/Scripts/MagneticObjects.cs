@@ -20,4 +20,11 @@ public class MagneticObjects : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void SetSettings(int _exp, int _hp, int _money)
+    {
+        expAdd = _exp;
+        hpAdd = _hp;
+        money = _money;
+    }
 }
