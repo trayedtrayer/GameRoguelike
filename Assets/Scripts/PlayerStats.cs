@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,6 +8,7 @@ public static class Player
 {
     public static GameObject playerObject;
 }
+
 public class PlayerStats : MonoBehaviour
 {
     [Header("Stats Player")]
@@ -28,6 +29,12 @@ public class PlayerStats : MonoBehaviour
     public string namePlayer;
     public int playerId;
     public GameObject deadBody;
+
+    // Базовые значения (до бонусов прокачки), задаются в инспекторе
+    [Header("Базовые значения (до прокачки)")]
+    public int baseMaxHp;
+    public float baseMaxShield;
+
     [Header("UI And Other")]
     public Image shieldBar;
     public Image shieldCooldownBar;
@@ -49,6 +56,10 @@ public class PlayerStats : MonoBehaviour
         Player.playerObject = gameObject;
         listItems = new List<DataBase.Item>();
         Time.timeScale = 1;
+
+        // Запоминаем базовые значения из инспектора
+        if (baseMaxHp == 0) baseMaxHp = maxHp;
+        if (baseMaxShield == 0) baseMaxShield = maxShield;
     }
 
     private void Start()
@@ -67,6 +78,10 @@ public class PlayerStats : MonoBehaviour
         {
             GetComponentInChildren<Hand>().SetActiveWeapon(0);
         }
+
+        // Применяем уже сохранённые бонусы прокачки (если UpgradeManager уже загружен)
+        if (UpgradeManager.Instance != null)
+            UpgradeManager.Instance.ApplyBonusesToPlayer(this);
     }
 
     void LoadSave(XmlSaver.GameStats stats)
@@ -79,9 +94,93 @@ public class PlayerStats : MonoBehaviour
         expForNewLvl = stats.xpForNewLvl;
         playerId = stats.idPlayer;
         listItems = stats.items;
+        money = stats.money;
+
         GetComponentInChildren<Hand>().CreateWeaponForSave(DataBase.GetWeapon(stats.weaponOneName), 0);
         GetComponentInChildren<Hand>().CreateWeaponForSave(DataBase.GetWeapon(stats.weaponTwoName), 1);
+
+        // Загружаем данные прокачки в UpgradeManager
+        if (UpgradeManager.Instance != null && stats.upgradeLevels != null)
+        {
+            UpgradeManager.Instance.LoadFromSave(
+                stats.developmentPoints,
+                stats.upgradeLevels
+            );
+            UpgradeManager.Instance.ApplyBonusesToPlayer(this);
+        }
+
+        RefreshTexts();
     }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // ПРИМЕНЕНИЕ БОНУСОВ ОТ ПРОКАЧКИ
+    // Вызывается из UpgradeManager после каждой покупки и при загрузке.
+    // ─────────────────────────────────────────────────────────────────────────
+
+    public void ApplyUpgradeBonuses(int bonusMaxHp, float bonusShieldMax, float bonusShieldRegeneration)
+    {
+        maxHp = baseMaxHp + bonusMaxHp;
+        maxShield = baseMaxShield + bonusShieldMax;
+        shieldCooldown = shieldCooldown - bonusShieldRegeneration;
+        hp = Mathf.Clamp(hp, 1, maxHp);
+        shield = Mathf.Clamp(shield, 0, maxShield);
+        RefreshTexts();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // ЛЕВЕЛАП — теперь даёт ОЧКО РАЗВИТИЯ, а не карточку
+    // ─────────────────────────────────────────────────────────────────────────
+
+    void AddExp(int _exp)
+    {
+        if (exp + _exp < expForNewLvl)
+        {
+            exp += _exp;
+        }
+        else
+        {
+            int temp = _exp - (expForNewLvl - exp);
+            exp = temp;
+            level += 1;
+            expForNewLvl = Mathf.RoundToInt(expForNewLvl * 1.15f); // масштаб XP для следующего уровня
+
+            // ── НОВОЕ: выдаём очко развития вместо карточки ──────────────
+            if (UpgradeManager.Instance != null)
+                UpgradeManager.Instance.AddDevelopmentPoint();
+            // ─────────────────────────────────────────────────────────────
+
+            Debug.Log($"[PlayerStats] Уровень {level}! Очков развития: {UpgradeManager.Instance?.developmentPoints}");
+        }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // РАСХОД ПРЕДМЕТОВ (нужен UpgradeManager для покупки апгрейдов)
+    // ─────────────────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// Списывает предметы из инвентаря игрока.
+    /// Вызывается из UpgradeManager.TryPurchase.
+    /// </summary>
+    public void SpendItems(List<DataBase.Item> itemsToSpend)
+    {
+        foreach (var cost in itemsToSpend)
+        {
+            for (int i = 0; i < listItems.Count; i++)
+            {
+                if (listItems[i].nameItem == cost.nameItem)
+                {
+                    listItems[i].countItem -= cost.countItem;
+                    if (listItems[i].countItem <= 0)
+                        listItems.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // ОСТАЛЬНОЕ (без изменений)
+    // ─────────────────────────────────────────────────────────────────────────
 
     public void SwapPlayer(int _playerId, Transform _placeSpawn)
     {
@@ -95,7 +194,6 @@ public class PlayerStats : MonoBehaviour
         cameraFollow.GetComponent<CameraFollowing>().SetObjectFollowing(_player.transform);
         _player.GetComponent<PlayerStats>().GetCam(cameraFollow);
         Destroy(_placeSpawn.gameObject);
-        print(_playerId);
         GameObject.Find("StartLocHead").GetComponent<StartLocScript>().CheckPoses(_playerId, _inactivePlayer);
         Destroy(gameObject);
     }
@@ -137,12 +235,12 @@ public class PlayerStats : MonoBehaviour
 
     void RemoveShield(int _hpRemove)
     {
-        if(shield - _hpRemove < 0)
+        if (shield - _hpRemove < 0)
         {
             shield = 0;
-            RemoveHp((int)Mathf.Abs(shield-_hpRemove));
+            RemoveHp((int)Mathf.Abs(shield - _hpRemove));
         }
-        else 
+        else
         {
             shield -= _hpRemove;
         }
@@ -162,113 +260,46 @@ public class PlayerStats : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void AddExp(int _exp)
-    {
-        if (exp + _exp < expForNewLvl)
-        {
-            print(exp + "----" + _exp);
-            exp += _exp;
-        }
-        else
-        {
-            int temp = _exp - (expForNewLvl - exp);
-            exp = temp;
-            level += 1;
-        }
-    }
-
     void AddHp(int _hp)
     {
-        if (hp + _hp >= maxHp)
-        {
-            hp = maxHp;
-        }
-        else
-        {
-            hp += _hp;
-        }
+        hp = Mathf.Min(hp + _hp, maxHp);
     }
 
-    public int GetHp()
-    {
-        return hp;
-    }
-
-    public float GetShield()
-    {
-        return shield;
-    }
-
-    public int GetXp()
-    {
-        return exp;
-    }
-
-    public int GetXpForNewLvl()
-    {
-        return expForNewLvl;
-    }
-
-    public int GetLvl()
-    {
-        return level;
-    }
-
-    public int GetCurrentGameLvl()
-    {
-        return currentLvl;
-    }
-
-    public void CompleteLevel()
-    {
-        currentLvl += 1;
-    }
-
-    public int GetPlayerId()
-    {
-        return playerId;
-    }
-
-    public void ChangePlayerId(int _playerId)
-    {
-        playerId = _playerId;
-    }
+    public int GetHp() => hp;
+    public float GetShield() => shield;
+    public int GetXp() => exp;
+    public int GetXpForNewLvl() => expForNewLvl;
+    public int GetLvl() => level;
+    public int GetCurrentGameLvl() => currentLvl;
+    public void CompleteLevel() { currentLvl += 1; }
+    public int GetPlayerId() => playerId;
+    public void ChangePlayerId(int _playerId) { playerId = _playerId; }
 
     public void RefreshTexts()
     {
-        hpText.text = hp + "/" + maxHp;
-        shieldText.text = Mathf.FloorToInt(shield) + "/" + maxShield;
-        expText.text = exp + "/" + expForNewLvl;
-        shieldBar.fillAmount = shield / maxShield;
-        shieldCooldownBar.fillAmount = 1f-(shieldCooldown / maxShieldCooldown);
-        hpBar.fillAmount = (float)hp / maxHp;
-        expBar.fillAmount = (float)exp / expForNewLvl;
-        lvlText.text = "" + level;
+        if (hpText != null) hpText.text = hp + "/" + maxHp;
+        if (shieldText != null) shieldText.text = Mathf.FloorToInt(shield) + "/" + maxShield;
+        if (expText != null) expText.text = exp + "/" + expForNewLvl;
+        if (shieldBar != null) shieldBar.fillAmount = shield / maxShield;
+        if (shieldCooldownBar != null) shieldCooldownBar.fillAmount = 1f - (shieldCooldown / maxShieldCooldown);
+        if (hpBar != null) hpBar.fillAmount = (float)hp / maxHp;
+        if (expBar != null) expBar.fillAmount = (float)exp / expForNewLvl;
+        if (lvlText != null) lvlText.text = "" + level;
     }
 
     public void SetHandText(WeaponOnTheGround _weapon)
     {
         if (_weapon == null)
-        {
             textWeapon.text = " ";
-        }
         else
-        {
             hand.ShowWeapon(textWeapon, _weapon);
-        }
-
     }
 
     public void SetPlayerText(int _idPlayer)
     {
-        if (_idPlayer == -1)
-        {
-            textWeapon.text = "";
-        }
-        else
-        {
-            textWeapon.text = "Press E to play for " + DataBase.GetPlayer(_idPlayer).GetComponent<PlayerStats>().namePlayer;
-        }
+        textWeapon.text = _idPlayer == -1
+            ? ""
+            : "Press E to play for " + DataBase.GetPlayer(_idPlayer).GetComponent<PlayerStats>().namePlayer;
     }
 
     public void AddFunds(int _exp, int _hp)
@@ -278,19 +309,11 @@ public class PlayerStats : MonoBehaviour
         RefreshTexts();
     }
 
-    public void BecomeImmortal()
-    {
-        isMortal = true;
-    }
-
-    public void BecomeMortal()
-    {
-        isMortal = false;
-    }
+    public void BecomeImmortal() { isMortal = true; }
+    public void BecomeMortal() { isMortal = false; }
 
     public void SetArrows(GameObject[] enemies)
     {
-        print(enemies.Length);
         for (int i = 0; i < enemies.Length; i++)
         {
             GameObject t = Instantiate(prefabArrow, parentArrows.transform);
@@ -298,88 +321,68 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public List<DataBase.Item> GetPlayerInventory()
-    {
-        return listItems;
-    }
+    public List<DataBase.Item> GetPlayerInventory() => listItems;
 
     public void AddItem(DataBase.Item _item)
     {
-        bool found = false;
         for (int i = 0; i < listItems.Count; i++)
         {
             if (listItems[i].nameItem == _item.nameItem)
             {
                 listItems[i].countItem += _item.countItem;
-                found = true;
+                return;
             }
         }
-        if (!found)
-        {
-            listItems.Add(_item);
-        }
+        listItems.Add(_item);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<MagneticObjects>())
         {
-            GetComponent<PlayerStats>().AddFunds(collision.GetComponent<MagneticObjects>().expAdd, collision.GetComponent<MagneticObjects>().hpAdd);
+            AddFunds(collision.GetComponent<MagneticObjects>().expAdd,
+                     collision.GetComponent<MagneticObjects>().hpAdd);
             if (collision.GetComponent<ItemScript>())
-            {
-                GetComponent<PlayerStats>().AddItem(collision.GetComponent<ItemScript>().item);
-            }
+                AddItem(collision.GetComponent<ItemScript>().item);
             Destroy(collision.gameObject);
         }
     }
 
-    public int GetMoneyCount()
-    {
-        return money;
-    }
+    public int GetMoneyCount() => money;
 
     public static int[] ReturnSilverGold(int money)
     {
-        int[] goldSilv = new int[2];
-        goldSilv[0] = money / 100;
-        goldSilv[1] = money % 100;
-        return goldSilv;
+        return new int[] { money / 100, money % 100 };
     }
+
     public int[] ReturnSilverGold()
     {
-        int[] goldSilv = new int[2];
-        goldSilv[0] = money / 100;
-        goldSilv[1] = money % 100;
-        return goldSilv;
+        return new int[] { money / 100, money % 100 };
     }
 
     public List<bool> PlayerBuilds()
     {
-        List<bool> s = new List<bool>();
-        //Transform t = GameObject.Find("ListBuildings").transform;
-        //for (int i = 0; i < t.childCount; i++)
-        //{
-        //    s.Add(t.GetChild(i).gameObject.activeSelf);
-        //}
-        return s;
+        return new List<bool>();
     }
 
     public bool CheckForMoneyItems(List<DataBase.Item> items, int _money)
     {
-        List<DataBase.Item> itemsAccept = new(items);
+        List<DataBase.Item> itemsAccept = new List<DataBase.Item>(items);
         bool isMoney = money >= _money;
-        bool accept = false;
+
         for (int i = 0; i < listItems.Count; i++)
         {
             for (int u = 0; u < items.Count; u++)
             {
-                if ((listItems[i].nameItem == items[u].nameItem) && (listItems[i].countItem >= items[u].countItem))
+                if (listItems[i].nameItem == items[u].nameItem &&
+                    listItems[i].countItem >= items[u].countItem)
                 {
                     itemsAccept.Remove(items[u]);
                 }
             }
         }
-        return itemsAccept.Count == 0 && isMoney ? true : false;
+
+        return itemsAccept.Count == 0 && isMoney;
     }
 
     void HitForShield()
@@ -413,6 +416,7 @@ public class PlayerStats : MonoBehaviour
                 }
                 yield return new WaitForSeconds(0.02f);
             }
+            yield return null;
         }
     }
 }

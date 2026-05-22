@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class BulletScript : MonoBehaviour
     int layermask;
     public GameObject puffOnWall;
     private GameObject prefabBullet;
+    public Action<GameObject, int, Vector3> onHitCallback;
 
     private void Start()
     {
@@ -114,6 +116,14 @@ public class BulletScript : MonoBehaviour
         if (collision.GetComponent<EnemyScript>())
         {
             collision.GetComponent<EnemyScript>().RemoveHp(damage);
+            if (onHitCallback != null)
+            {
+                onHitCallback.Invoke(
+                    collision.gameObject,
+                    damage,
+                    transform.position
+                );
+            }
             Push(collision);
             ObjectDestroy();
         }
@@ -127,23 +137,9 @@ public class BulletScript : MonoBehaviour
         }
         else if (collision.GetComponent<EnemyBulletScript>())
         {
-            //if (isPushing)
-            //{
-            //    collision.attachedRigidbody.linearVelocity = Vector2.zero;
-            //    collision.GetComponent<SpriteRenderer>().flipX = !collision.GetComponent<SpriteRenderer>().flipX;
-            //    Push(collision);
-            //    BulletScript c = collision.gameObject.AddComponent<BulletScript>();
-            //    c.SetSettings(damage, canPenetrate, timeDestroy, isPushing, isBreaking, isReflect, prefabBullet);
-            //    Destroy(collision.GetComponent<EnemyBulletScript>());
-            //}
             if (isBreaking)
             {
                 collision.GetComponent<EnemyBulletScript>().ObjectDestroy();
-                //хглемхрэ мю бпюфеяйху оскъу вепег нафейр оскк
-                //хглемхрэ мю бпюфеяйху оскъу вепег нафейр оскк
-                //хглемхрэ мю бпюфеяйху оскъу вепег нафейр оскк
-                //хглемхрэ мю бпюфеяйху оскъу вепег нафейр оскк
-                //хглемхрэ мю бпюфеяйху оскъу вепег нафейр оскк
             }
 
         }

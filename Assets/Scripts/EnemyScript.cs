@@ -9,6 +9,9 @@ public class EnemyScript : MonoBehaviour
     public GameObject deadBody;
     MozgGeneration mozg;
     public GameObject randItem;
+    [HideInInspector]
+    protected bool isFound;
+    public float speed;
 
     private void Start()
     {
@@ -39,5 +42,10 @@ public class EnemyScript : MonoBehaviour
         mozg.EnemyKill();
         Destroy(gameObject);
 
+    }
+
+    public void SetFound()
+    {
+        isFound = true;
     }
 }

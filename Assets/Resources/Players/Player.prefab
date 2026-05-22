@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8817d92d6d2a2249ba68cb533c64707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  expForNewLvl: 0
+  expForNewLvl: 5
   maxHp: 700
   maxShieldCooldown: 5
   currentLvl: 1
@@ -83,6 +83,8 @@ MonoBehaviour:
   namePlayer: 
   playerId: 0
   deadBody: {fileID: 5918164333479790651, guid: 55f835e2e698ba54cb860dba7023ca9f, type: 3}
+  baseMaxHp: 0
+  baseMaxShield: 0
   shieldBar: {fileID: 2288366864970840865}
   shieldCooldownBar: {fileID: 9194222097161501316}
   hpBar: {fileID: 5339380264337291160}

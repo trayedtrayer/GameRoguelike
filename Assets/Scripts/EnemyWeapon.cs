@@ -89,6 +89,10 @@ public class EnemyWeapon : MonoBehaviour
             else
             {
                 target = CheckByRay();
+                if (GetComponentInParent<EnemyScript>())
+                {
+                    GetComponentInParent<EnemyScript>().SetFound();
+                }
                 if (GetComponentInParent<MeleeEnemyScript>())
                 {
                     GetComponentInParent<MeleeEnemyScript>().target = target;

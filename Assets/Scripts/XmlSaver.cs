@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Xml.Serialization;
 using System.IO;
 using UnityEngine.SceneManagement;
@@ -23,6 +23,8 @@ public class XmlSaver : MonoBehaviour
         public int currentLvl;
         public List<DataBase.Item> items;
         public List<bool> objectsActive;
+        public int developmentPoints;
+        public List<UpgradeSaveEntry> upgradeLevels;
     }
 
     bool isLoading;
@@ -91,6 +93,16 @@ public class XmlSaver : MonoBehaviour
         {
             File.Create(filePath).Dispose();
         }
+
+        // Собираем данные прокачки
+        int devPoints = 0;
+        List<UpgradeSaveEntry> upgradeEntries = new List<UpgradeSaveEntry>();
+        if (UpgradeManager.Instance != null)
+        {
+            devPoints = UpgradeManager.Instance.developmentPoints;
+            upgradeEntries = UpgradeManager.Instance.GetSaveEntries();
+        }
+
         GameStats stats = new GameStats
         {
             weaponOneName = hand.GunOne.GetComponentInChildren<WeaponMain>().weaponName,
@@ -104,10 +116,15 @@ public class XmlSaver : MonoBehaviour
             idPlayer = playerStats.GetPlayerId(),
             items = playerStats.GetPlayerInventory(),
             money = playerStats.GetMoneyCount(),
-            objectsActive = playerStats.PlayerBuilds()
+            objectsActive = playerStats.PlayerBuilds(),
+            // Прокачка
+            developmentPoints = devPoints,
+            upgradeLevels = upgradeEntries
         };
+
         print(stats.weaponOneName);
         print(stats.weaponTwoName);
+
         XmlSerializer serializer = new XmlSerializer(typeof(GameStats));
         using (TextWriter writer = new StreamWriter(Path.Combine(Application.persistentDataPath, "save.xml")))
         {
@@ -121,7 +138,6 @@ public class XmlSaver : MonoBehaviour
         if (File.Exists(filePath))
         {
             XmlSerializer serializer = new XmlSerializer(typeof(GameStats));
-
             using (FileStream stream = new FileStream(filePath, FileMode.Open))
             {
                 return serializer.Deserialize(stream) as GameStats;
@@ -129,7 +145,7 @@ public class XmlSaver : MonoBehaviour
         }
         else
         {
-            Debug.Log("���� ���������� �� ������.");
+            Debug.Log("Файл сохранения не найден.");
             return null;
         }
     }

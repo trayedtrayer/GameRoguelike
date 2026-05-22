@@ -3,12 +3,10 @@ using UnityEngine;
 
 public class MeleeEnemyScript : EnemyScript
 {
-    public float speed;
-
     public GameObject target;
     Vector2 posToMove;
     Rigidbody2D rb;
-    public float moveSpeed;
+    float moveSpeed;
     Animator animator;
     public float stoppingDistance;
 
@@ -18,15 +16,16 @@ public class MeleeEnemyScript : EnemyScript
         rb = GetComponent<Rigidbody2D>();
         StartCoroutine(MovingEnum());
         FindMozg();
+        moveSpeed = speed;
     }
     IEnumerator MovingEnum()
     {
         while (true)
         {
-            moveSpeed = 0f;
+            speed = 0f;
             animator.Play("Idle");
             yield return new WaitForSeconds(1f);
-            moveSpeed = speed;
+            speed = moveSpeed;
             animator.Play("Run");
             yield return new WaitForSeconds(6f);
 
@@ -37,6 +36,11 @@ public class MeleeEnemyScript : EnemyScript
     {
         if (target != null)
         {
+            if(moveSpeed == 0f)
+            {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = 0;
+            }
             if (Vector2.Distance((Vector2)target.transform.position, (Vector2)transform.position) > stoppingDistance)
             {
                 Vector2 direction = ((Vector2)target.transform.position - (Vector2)transform.position).normalized;

@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using UnityEngine;
 
 public class WeaponMain : MonoBehaviour
@@ -12,6 +12,7 @@ public class WeaponMain : MonoBehaviour
     public bool isPushing;
     public bool isBreaking;
     public bool isReflect;
+
     [Header("WeaponSettings")]
     public float timeDelayShot;
     public float spread;
@@ -26,14 +27,8 @@ public class WeaponMain : MonoBehaviour
     public GameObject prefabWeapon;
     public int lvlWeapon;
     public TypeWeapon type;
-    public enum TypeWeapon
-    {
-        melee = 0,
-        shotgun = 1,
-        rifle = 2,
-        miniguns = 3
-    }
-    Animator animator;
+    public enum TypeWeapon { melee = 0, shotgun = 1, rifle = 2, miniguns = 3 }
+
     public Sprite spriteWeapon;
     public bool canShoot = true;
 
@@ -51,68 +46,142 @@ public class WeaponMain : MonoBehaviour
 
     public void WeaponUpgrade(Crafting.Upgrade upgrade)
     {
-        print(1);
-        timeDelayStartShootMin = upgrade.timeDelayStartShootMin;        //увеличение времени "прогретости оружия"
-        timeDelayStartShootMax = upgrade.timeDelayStartShootMax;        //уменьшение максимального времени для того чтобы прогреть оружие
-        timeDelayShot = upgrade.timeDelayShot;                          //уменьшение времени задержки между выстрелами
-        spread += upgrade.spread;                                        //увелчиение колиечство волн в выстрелах оружия
-        timeDelaySpray = upgrade.timeDelaySpray;                        //уменьшение задержки меджу волнами выстрелов оружия
-        countBullet += upgrade.countBullet;                              //увеличение кол-ва пуль в волне оружия
-        forceBullet = upgrade.bulletPower;                              //увеличение скорости пули
-        damageBullet = upgrade.damage;                                   //увеличение дамага
-        lvlWeapon += 1;                                                  //увеличение лвла оружия для статистики
+        timeDelayStartShootMin = upgrade.timeDelayStartShootMin;
+        timeDelayStartShootMax = upgrade.timeDelayStartShootMax;
+        timeDelayShot = upgrade.timeDelayShot;
+        spread += upgrade.spread;
+        timeDelaySpray = upgrade.timeDelaySpray;
+        countBullet += upgrade.countBullet;
+        forceBullet = upgrade.bulletPower;
+        damageBullet = upgrade.damage;
+        lvlWeapon += 1;
     }
 
-    public virtual void StartShooting()
-    {
-        //start
-    }
+    public virtual void StartShooting() { }
 
-    public void Shoot()
-    {
-        StartCoroutine(Shoots());
-
-    }
+    public void Shoot() => StartCoroutine(Shoots());
 
     protected IEnumerator Shoots()
     {
-        if (shotEffect != null) Destroy(Instantiate(shotEffect, placeSpawn.transform.position, transform.rotation), 0.2f);
-        for (int i = 0; i < countBullet; i++)
+        UpgradeManager mgr = UpgradeManager.Instance;
+
+        int finalDamage = CalcFinalDamage(mgr);
+        int finalCount = CalcFinalCountBullet(mgr);
+        float finalSpread = CalcFinalSpread(mgr);
+        float finalForce = CalcFinalForce(mgr);
+        bool finalPenetrate = canPenetrate || (mgr?.bonusPenetration ?? false);
+        bool finalReflect = isReflect || (mgr?.bonusReflect ?? false);
+
+        if (shotEffect != null)
+            Destroy(Instantiate(shotEffect, placeSpawn.transform.position, transform.rotation), 0.2f);
+
+        for (int i = 0; i < finalCount; i++)
         {
-            var _b = CentralizedObjectPool.instancePool.GetObject(bullet);
-            _b.transform.position = placeSpawn.position;
-            _b.transform.rotation = placeSpawn.rotation;//bullet, placeSpawn.position, placeSpawn.rotation);
-            _b.transform.Rotate(0, 0, Random.Range(-spread, spread));
-            if (_b.GetComponent<Rigidbody2D>())
-            {
-                _b.GetComponent<Rigidbody2D>().AddForce(_b.transform.right * forceBullet);
-            }
-            if (_b.GetComponent<BulletScript>())
-            {
-                _b.gameObject.GetComponent<BulletScript>().SetSettings(damageBullet, canPenetrate, timeDestroy, isPushing, isBreaking, isReflect, bullet);
-            }
-            if (_b.GetComponent<EnemyBulletScript>())
-            {
-                _b.gameObject.GetComponent<EnemyBulletScript>().SetSettings(damageBullet, canPenetrate, timeDestroy, isPushing, isBreaking, bullet);
-            }
+            SpawnBullet(finalDamage, finalSpread, finalForce, finalPenetrate, finalReflect);
+
+            // P2: Twin Shot
+            if (mgr != null && mgr.skill_P2_TwinShotChance > 0)
+                if (Random.Range(0f, 100f) < mgr.skill_P2_TwinShotChance)
+                    SpawnBullet(finalDamage, finalSpread + 5f, finalForce, finalPenetrate, finalReflect);
+
             yield return new WaitForSeconds(timeDelaySpray);
         }
+    }
 
+    private void SpawnBullet(int damage, float currentSpread, float force, bool penetrate, bool reflect)
+    {
+        var _b = CentralizedObjectPool.instancePool.GetObject(bullet);
+        _b.transform.position = placeSpawn.position;
+        _b.transform.rotation = placeSpawn.rotation;
+        _b.transform.Rotate(0, 0, Random.Range(-currentSpread, currentSpread));
+
+        var rb = _b.GetComponent<Rigidbody2D>();
+        if (rb != null) rb.AddForce(_b.transform.right * force);
+
+        var bs = _b.GetComponent<BulletScript>();
+        if (bs != null)
+        {
+            bs.SetSettings(damage, penetrate, timeDestroy, isPushing, isBreaking, reflect, bullet);
+            bs.onHitCallback = OnBulletHit;
+        }
+
+        var ebs = _b.GetComponent<EnemyBulletScript>();
+        if (ebs != null)
+            ebs.SetSettings(damage, penetrate, timeDestroy, isPushing, isBreaking, bullet);
+    }
+
+    // Р’С‹Р·С‹РІР°РµС‚СЃСЏ РёР· BulletScript РїСЂРё РїРѕРїР°РґР°РЅРёРё
+    public void OnBulletHit(GameObject hitObject, int baseDamage, Vector3 hitPosition)
+    {
+        UpgradeManager mgr = UpgradeManager.Instance;
+        if (mgr == null || hitObject == null) return;
+
+        EnemyScript enemy = hitObject.GetComponent<EnemyScript>();
+        if (enemy == null) return;
+
+        // РљСЂРёС‚
+        if (mgr.bonusCritChancePercent > 0 && Random.Range(0f, 100f) < mgr.bonusCritChancePercent)
+            enemy.RemoveHp(baseDamage);
+
+        // Р’Р·СЂС‹РІ
+        if (mgr.bonusExplosionChance > 0 && Random.Range(0f, 100f) < mgr.bonusExplosionChance)
+        {
+            //if (explosionPrefab != null)
+            //    Destroy(Instantiate(explosionPrefab, hitPosition, Quaternion.identity), 1f);
+            foreach (var col in Physics2D.OverlapCircleAll(hitPosition, 2f))
+            {
+                var e = col.GetComponent<EnemyScript>();
+                if (e != null && e.gameObject != hitObject)
+                    e.RemoveHp(Mathf.RoundToInt(baseDamage * 0.5f));
+            }
+        }
+
+        // РџРѕРґР¶РѕРі
+        if (mgr.bonusBurnChance > 0 && Random.Range(0f, 100f) < mgr.bonusBurnChance)
+        {
+            var burn = hitObject.GetComponent<BurnEffect>();
+            if (burn != null) burn.Refresh(); else hitObject.AddComponent<BurnEffect>();
+        }
+
+        // Р—Р°РјРѕСЂРѕР·РєР°
+        if (mgr.bonusFreezeChance > 0 && Random.Range(0f, 100f) < mgr.bonusFreezeChance)
+        {
+            var freeze = hitObject.GetComponent<FreezeEffect>();
+            if (freeze != null) freeze.Refresh(); else hitObject.AddComponent<FreezeEffect>();
+        }
+    }
+
+    private int CalcFinalDamage(UpgradeManager mgr)
+    {
+        if (mgr == null) return damageBullet;
+        float dmg = damageBullet * (1f + mgr.bonusDamagePercent / 100f);
+        if (type == TypeWeapon.rifle) dmg *= 1f + mgr.bonusRifleDamagePercent / 100f;
+        return Mathf.Max(1, Mathf.CeilToInt(dmg));
+    }
+
+    private int CalcFinalCountBullet(UpgradeManager mgr)
+    {
+        int result = countBullet;
+        if (mgr != null && type == TypeWeapon.shotgun) result += mgr.bonusShotgunCountBullet;
+        return Mathf.Max(1, result);
+    }
+
+    private float CalcFinalSpread(UpgradeManager mgr)
+    {
+        float s = spread;
+        if (mgr != null && type == TypeWeapon.shotgun) s += mgr.bonusShotgunSpread;
+        return s;
+    }
+
+    private float CalcFinalForce(UpgradeManager mgr)
+    {
+        if (mgr == null) return forceBullet;
+        return forceBullet * (1f + mgr.bonusBulletSpeedPercent / 100f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Wall")
-        {
-            canShoot = false;
-        }
-    }
+    { if (collision.tag == "Wall") canShoot = false; }
 
     private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Wall")
-        {
-            canShoot = true;
-        }
-    }
+    { if (collision.tag == "Wall") canShoot = true; }
 }
