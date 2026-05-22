@@ -66,6 +66,7 @@ public class UpgradeUI : MonoBehaviour
     {
         isOpen = true;
         mainWindow.SetActive(true);
+        mainWindow.transform.parent.gameObject.SetActive(true);
         RefreshPoints();
         RefreshAllCards();
         SwitchBranch(currentBranch);
@@ -76,6 +77,7 @@ public class UpgradeUI : MonoBehaviour
     {
         isOpen = false;
         mainWindow.SetActive(false);
+        mainWindow.transform.parent.gameObject.SetActive(false);
         detailPanel.SetActive(false);
         selectedNode = null;
         Time.timeScale = 1f;

@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 6658ede7c010c1b4589e79c7c65554ca
+guid: 4b1b21e88001c3c4c8f7b4310235c62f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3219084086770127776
-    second: bones_0
-  - first:
-      213: -5193276013480602723
-    second: bones_1
-  - first:
-      213: -2189497306108170101
-    second: bones_2
+      213: 4024170445220466891
+    second: shperebezu_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -119,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bones_0
+      name: shperebezu_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 17
-        height: 25
+        x: 3
+        y: 1
+        width: 26
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,52 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0a3db06ebeb7cac20800000000000000
-      internalID: 3219084086770127776
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bones_1
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 15
-        width: 17
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d939eeb1bf6cde7b0800000000000000
-      internalID: -5193276013480602723
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bones_2
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 3
-        width: 10
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b807fb0fcc75d91e0800000000000000
-      internalID: -2189497306108170101
+      spriteID: bc0ddfee2b9b8d730800000000000000
+      internalID: 4024170445220466891
       vertices: []
       indices: 
       edges: []
@@ -198,9 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bones_0: 3219084086770127776
-      bones_1: -5193276013480602723
-      bones_2: -2189497306108170101
+      shperebezu_0: 4024170445220466891
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

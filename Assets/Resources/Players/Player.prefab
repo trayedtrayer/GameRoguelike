@@ -1133,6 +1133,8 @@ MonoBehaviour:
   speedMultiplierRoll: 3
   parentStatusBar: {fileID: 1448047633865319368}
   prefabCooldown: {fileID: 2225090201683541940, guid: 64ef35904a2add148b30236bba597940, type: 3}
+  dashSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!114 &3707743957893119659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1273,7 +1275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e6070f575b8724e8539957835b980b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeUI
-  mainWindow: {fileID: 423685529473228906}
+  mainWindow: {fileID: 3241350597613447131}
   tabGeneral: {fileID: 4516809631587149755}
   tabWeapon: {fileID: 3908830724276403092}
   tabSpecial: {fileID: 8876146996547238271}
@@ -1328,7 +1330,6 @@ MonoBehaviour:
   chestWindow: {fileID: 3464957488225729384}
   weaponGrid: {fileID: 1903197669859344643}
   weaponCardPrefab: {fileID: 3379990812569114070, guid: 3f8c399a4b20c5849acf481dc9424373, type: 3}
-  countText: {fileID: 0}
 --- !u!1 &1012483920617623124
 GameObject:
   m_ObjectHideFlags: 0
