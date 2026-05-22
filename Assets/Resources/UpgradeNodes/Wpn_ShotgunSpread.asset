@@ -21,19 +21,25 @@ MonoBehaviour:
   branch: 1
   playerIdFilter: 0
   levelCosts:
-  - levelPoints: 1
-    items:
-    - itemName: "\u041F\u043E\u0440\u043E\u0445"
-      count: 5
   - levelPoints: 2
     items:
-    - itemName: "\u041F\u043E\u0440\u043E\u0445"
-      count: 8
-    - itemName: "\u0421\u0442\u0430\u043B\u044C"
-      count: 2
+    - itemName: "\u041A\u043E\u0441\u0442\u0438"
+      count: 15
+    - itemName: "\u0416\u0435\u043B\u0435\u0437\u043E"
+      count: 15
+    - itemName: "\u0414\u0435\u043D\u044C\u0433\u0438"
+      count: 15
+  - levelPoints: 3
+    items:
+    - itemName: "\u041A\u043E\u0441\u0442\u0438"
+      count: 20
+    - itemName: "\u0416\u0435\u043B\u0435\u0437\u043E"
+      count: 20
+    - itemName: "\u0414\u0435\u043D\u044C\u0433\u0438"
+      count: 20
   valuesPerLevel:
   - 5
-  - 8
+  - 5
   statType: 10
   requiredNodeId: Wpn_ShotgunBullets
   requiredNodeMinLevel: 1

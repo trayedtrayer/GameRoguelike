@@ -22,30 +22,44 @@ MonoBehaviour:
   levelCosts:
   - levelPoints: 1
     items:
-    - itemName: "\u0422\u0440\u0430\u0432\u0430"
-      count: 5
-  - levelPoints: 1
-    items:
-    - itemName: "\u0422\u0440\u0430\u0432\u0430"
-      count: 8
-  - levelPoints: 2
-    items:
-    - itemName: "\u0416\u0435\u043B\u0435\u0437\u043E"
+    - itemName: "\u041A\u043E\u0441\u0442\u0438"
       count: 5
   - levelPoints: 2
     items:
-    - itemName: "\u0416\u0435\u043B\u0435\u0437\u043E"
-      count: 8
+    - itemName: "\u041A\u043E\u0441\u0442\u0438"
+      count: 10
+    - itemName: "\u0411\u0430\u0442\u0430\u0440\u0435\u0439\u043A\u0430"
+      count: 4
   - levelPoints: 3
     items:
-    - itemName: "\u0421\u0442\u0430\u043B\u044C"
-      count: 4
+    - itemName: "\u041A\u043E\u0441\u0442\u0438"
+      count: 15
+    - itemName: "\u0411\u0430\u0442\u0430\u0440\u0435\u0439\u043A\u0430"
+      count: 7
+  - levelPoints: 4
+    items:
+    - itemName: "\u041A\u043E\u0441\u0442\u0438"
+      count: 20
+    - itemName: "\u0411\u0430\u0442\u0430\u0440\u0435\u0439\u043A\u0430"
+      count: 10
+    - itemName: "\u041F\u044B\u043B\u0430\u044E\u0449\u0435\u0435 \u0441\u0435\u0440\u0434\u0446\u0435"
+      count: 3
+  - levelPoints: 5
+    items:
+    - itemName: "\u0421\u0444\u0435\u0440\u0430 \u0431\u0435\u0437\u0443\u043C\u0438\u044F"
+      count: 1
+    - itemName: "\u041F\u044B\u043B\u0430\u044E\u0449\u0435\u0435 \u0441\u0435\u0440\u0434\u0446\u0435"
+      count: 5
+    - itemName: "\u0411\u0430\u0442\u0430\u0440\u0435\u0439\u043A\u0430"
+      count: 15
+    - itemName: "\u041A\u043E\u0441\u0442\u0438"
+      count: 30
   valuesPerLevel:
   - 10
   - 10
-  - 15
-  - 15
-  - 20
+  - 10
+  - 10
+  - 10
   statType: 1
   requiredNodeId: 
   requiredNodeMinLevel: 1

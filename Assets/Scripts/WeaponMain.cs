@@ -32,9 +32,18 @@ public class WeaponMain : MonoBehaviour
     public Sprite spriteWeapon;
     public bool canShoot = true;
 
+    [Header("Audio")]
+    public AudioClip shootSound;
+    public AudioSource audioSource;
+
     private void Start()
     {
         spriteWeapon = GetComponent<SpriteRenderer>().sprite;
+
+        
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+
         StartShooting();
     }
 
@@ -63,6 +72,10 @@ public class WeaponMain : MonoBehaviour
 
     protected IEnumerator Shoots()
     {
+       
+        if (shootSound != null && audioSource != null)
+            audioSource.PlayOneShot(shootSound);
+
         UpgradeManager mgr = UpgradeManager.Instance;
 
         int finalDamage = CalcFinalDamage(mgr);
@@ -79,7 +92,6 @@ public class WeaponMain : MonoBehaviour
         {
             SpawnBullet(finalDamage, finalSpread, finalForce, finalPenetrate, finalReflect);
 
-            // P2: Twin Shot
             if (mgr != null && mgr.skill_P2_TwinShotChance > 0)
                 if (Random.Range(0f, 100f) < mgr.skill_P2_TwinShotChance)
                     SpawnBullet(finalDamage, finalSpread + 5f, finalForce, finalPenetrate, finalReflect);
@@ -110,7 +122,6 @@ public class WeaponMain : MonoBehaviour
             ebs.SetSettings(damage, penetrate, timeDestroy, isPushing, isBreaking, bullet);
     }
 
-    // Вызывается из BulletScript при попадании
     public void OnBulletHit(GameObject hitObject, int baseDamage, Vector3 hitPosition)
     {
         UpgradeManager mgr = UpgradeManager.Instance;
@@ -119,15 +130,11 @@ public class WeaponMain : MonoBehaviour
         EnemyScript enemy = hitObject.GetComponent<EnemyScript>();
         if (enemy == null) return;
 
-        // Крит
         if (mgr.bonusCritChancePercent > 0 && Random.Range(0f, 100f) < mgr.bonusCritChancePercent)
             enemy.RemoveHp(baseDamage);
 
-        // Взрыв
         if (mgr.bonusExplosionChance > 0 && Random.Range(0f, 100f) < mgr.bonusExplosionChance)
         {
-            //if (explosionPrefab != null)
-            //    Destroy(Instantiate(explosionPrefab, hitPosition, Quaternion.identity), 1f);
             foreach (var col in Physics2D.OverlapCircleAll(hitPosition, 2f))
             {
                 var e = col.GetComponent<EnemyScript>();
@@ -136,14 +143,12 @@ public class WeaponMain : MonoBehaviour
             }
         }
 
-        // Поджог
         if (mgr.bonusBurnChance > 0 && Random.Range(0f, 100f) < mgr.bonusBurnChance)
         {
             var burn = hitObject.GetComponent<BurnEffect>();
             if (burn != null) burn.Refresh(); else hitObject.AddComponent<BurnEffect>();
         }
 
-        // Заморозка
         if (mgr.bonusFreezeChance > 0 && Random.Range(0f, 100f) < mgr.bonusFreezeChance)
         {
             var freeze = hitObject.GetComponent<FreezeEffect>();

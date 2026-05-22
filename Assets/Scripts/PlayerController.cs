@@ -24,14 +24,21 @@ public class PlayerController : MonoBehaviour
     public GameObject parentStatusBar;
     public GameObject prefabCooldown;
 
+    [Header("Audio")]
+    public AudioClip dashSound;
+    public AudioSource audioSource;
+
     void Awake()
     {
         animator = GetComponentInChildren<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         playerStats = GetComponent<PlayerStats>();
         particle = GetComponentInChildren<ParticleSystem>();
-        print(particle.gameObject.name);
         particle.Stop();
+
+       
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -40,15 +47,14 @@ public class PlayerController : MonoBehaviour
         {
             moveHorizontal = Input.GetAxis("Horizontal");
             moveVertical = Input.GetAxis("Vertical");
+
             if (moveHorizontal != 0 || moveVertical != 0)
-            {
                 animator.SetBool("isRun", true);
-            }
             else
-            {
                 animator.SetBool("isRun", false);
-            }
-            if (Input.GetMouseButtonDown(1) && !isRoll && !(moveHorizontal == 0 && moveVertical == 0))
+
+            if (Input.GetMouseButtonDown(1) && !isRoll &&
+                !(moveHorizontal == 0 && moveVertical == 0))
             {
                 StartCoroutine(Rollin());
             }
@@ -57,8 +63,12 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Rollin()
     {
-        print("YAHA");
         isRoll = true;
+
+       
+        if (dashSound != null && audioSource != null)
+            audioSource.PlayOneShot(dashSound);
+
         float _sp = speed;
         var push = new Vector2(moveHorizontal, moveVertical);
         push = push.normalized;
@@ -73,8 +83,10 @@ public class PlayerController : MonoBehaviour
         playerStats.BecomeMortal();
         particle.Stop();
         canMove = true;
+
         Image t = Instantiate(prefabCooldown, parentStatusBar.transform).GetComponent<Image>();
         timeDilation = timeDilationRollMax;
+
         while (true)
         {
             if (timeDilation > 0)
@@ -89,6 +101,7 @@ public class PlayerController : MonoBehaviour
                 break;
             }
         }
+
         isRoll = false;
     }
 
@@ -133,7 +146,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            rb2d.AddForce(new Vector2(moveHorizontal > 1 ? 1 : moveHorizontal, moveVertical > 1 ? 1 : moveVertical).normalized * speed, ForceMode2D.Force);
+            rb2d.AddForce(new Vector2(
+                moveHorizontal > 1 ? 1 : moveHorizontal,
+                moveVertical > 1 ? 1 : moveVertical
+            ).normalized * speed, ForceMode2D.Force);
         }
     }
 

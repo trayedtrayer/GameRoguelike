@@ -22,14 +22,16 @@ MonoBehaviour:
   branch: 3
   playerIdFilter: 1
   levelCosts:
-  - levelPoints: 4
+  - levelPoints: 5
     items:
+    - itemName: "\u0416\u0435\u043B\u0435\u0437\u043E"
+      count: 50
     - itemName: "\u0421\u0442\u0430\u043B\u044C"
-      count: 6
-    - itemName: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u043B"
-      count: 3
-    - itemName: "\u0420\u0443\u043D\u0430"
-      count: 2
+      count: 25
+    - itemName: "\u041F\u044B\u043B\u0430\u044E\u0449\u0435\u0435 \u0441\u0435\u0440\u0434\u0446\u0435"
+      count: 12
+    - itemName: "\u041A\u043E\u0441\u0430 \u0440\u0430\u0437\u0440\u0443\u0448\u0435\u043D\u0438\u044F"
+      count: 5
   valuesPerLevel:
   - 1
   statType: 19

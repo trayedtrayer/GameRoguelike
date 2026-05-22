@@ -24,10 +24,12 @@ MonoBehaviour:
   levelCosts:
   - levelPoints: 3
     items:
-    - itemName: "\u0421\u0442\u0430\u043B\u044C"
-      count: 5
-    - itemName: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u043B"
-      count: 2
+    - itemName: "\u041A\u043E\u0441\u0442\u0438"
+      count: 50
+    - itemName: "\u0416\u0435\u043B\u0435\u0437\u043E"
+      count: 50
+    - itemName: "\u0414\u0435\u043D\u044C\u0433\u0438"
+      count: 50
   valuesPerLevel:
   - 1
   statType: 11

@@ -187,7 +187,7 @@ public class UpgradeManager : MonoBehaviour
             case UpgradeStatType.DropPercent: bonusDropPercent += v; break;
             case UpgradeStatType.ShieldMax: bonusShieldMax += v; break;
             case UpgradeStatType.HpRegenPerKill: bonusHpRegenPerKill += v; break;
-            case UpgradeStatType.ShieldRegenSpeed: bonusShieldRegenSpeed *= v; break; // множитель
+            case UpgradeStatType.ShieldRegenSpeed: bonusShieldRegenSpeed *= v; break; 
             case UpgradeStatType.CritChancePercent: bonusCritChancePercent += v; break;
             case UpgradeStatType.RifleDamagePercent: bonusRifleDamagePercent += v; break;
             case UpgradeStatType.ShotgunCountBullet: bonusShotgunCountBullet += Mathf.RoundToInt(v); break;

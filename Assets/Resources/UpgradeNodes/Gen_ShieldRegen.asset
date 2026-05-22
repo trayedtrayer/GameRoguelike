@@ -21,22 +21,28 @@ MonoBehaviour:
   branch: 0
   playerIdFilter: 0
   levelCosts:
+  - levelPoints: 1
+    items:
+    - itemName: "\u041C\u0435\u0448\u043E\u0447\u0435\u043A"
+      count: 5
   - levelPoints: 2
     items:
-    - itemName: "\u0421\u0442\u0430\u043B\u044C"
-      count: 3
-  - levelPoints: 2
-    items:
-    - itemName: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u043B"
-      count: 2
+    - itemName: "\u041C\u0435\u0448\u043E\u0447\u0435\u043A"
+      count: 10
+    - itemName: "\u0421\u0432\u0438\u0442\u043E\u043A"
+      count: 5
   - levelPoints: 3
     items:
-    - itemName: "\u0420\u0443\u043D\u0430"
-      count: 2
+    - itemName: "\u041C\u0435\u0448\u043E\u0447\u0435\u043A "
+      count: 20
+    - itemName: "\u0421\u0432\u0438\u0442\u043E\u043A"
+      count: 10
+    - itemName: "\u041A\u043E\u043B\u044C\u0446\u043E \u0432\u0441\u0435\u0432\u043B\u0430\u0441\u0442\u0438\u044F"
+      count: 1
   valuesPerLevel:
   - 1.3
   - 1.3
-  - 1.5
+  - 1.4
   statType: 6
   requiredNodeId: Gen_Shield
   requiredNodeMinLevel: 2
