@@ -15,7 +15,7 @@ MonoBehaviour:
   upgradeName: "\u0421\u043D\u0430\u0439\u043F\u0435\u0440\u0441\u043A\u0438\u0439
     \u0433\u043B\u0430\u0437"
   description: "\u0423\u0440\u043E\u043D \u0432\u0438\u043D\u0442\u043E\u0432\u043E\u043A
-    \u0438 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u0432 +10% \u0437\u0430
+    \u0438 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u0432 +15% \u0437\u0430
     \u0443\u0440\u043E\u0432\u0435\u043D\u044C."
   icon: {fileID: -47663176633601552, guid: 2a19b87b57574774a9825b90745163ae, type: 3}
   branch: 1
@@ -50,10 +50,10 @@ MonoBehaviour:
     - itemName: "\u041A\u043E\u0441\u0430 \u0440\u0430\u0437\u0440\u0443\u0448\u0435\u043D\u0438\u044F"
       count: 1
   valuesPerLevel:
-  - 10
-  - 10
-  - 10
-  - 10
+  - 15
+  - 15
+  - 15
+  - 15
   statType: 8
   requiredNodeId: 
   requiredNodeMinLevel: 1
