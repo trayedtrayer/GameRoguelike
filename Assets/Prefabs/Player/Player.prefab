@@ -1249,7 +1249,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   isRoll: 0
   timeDilation: 0
-  timeDilationRollMax: 0
+  timeDilationRollMax: 2
   timeRoll: 0.5
   speedMultiplierRoll: 3
   parentStatusBar: {fileID: 1448047633865319368}
@@ -1275,6 +1275,7 @@ MonoBehaviour:
   maxShield: 20
   money: 0
   isMortal: 0
+  cameraFollow: {fileID: 0}
   namePlayer: "\u0417\u0438\u043A\u0441"
   playerId: 2
   deadBody: {fileID: 5918164333479790651, guid: 55f835e2e698ba54cb860dba7023ca9f, type: 3}
@@ -1284,7 +1285,6 @@ MonoBehaviour:
   shieldCooldownBar: {fileID: 9194222097161501316}
   hpBar: {fileID: 5339380264337291160}
   expBar: {fileID: 1473776729709703837}
-  loadBar: {fileID: 7957278097759733640}
   hpText: {fileID: 2423781675458364213}
   shieldText: {fileID: 4369303072659064551}
   expText: {fileID: 3531843063136056153}
@@ -1403,6 +1403,9 @@ MonoBehaviour:
   contentGeneral: {fileID: 6443852158621550402}
   contentWeapon: {fileID: 2399565016441920136}
   contentSpecial: {fileID: 4171294802561494812}
+  ScrollViewGeneral: {fileID: 0}
+  ScrollViewWeapon: {fileID: 0}
+  ScrollViewSpecial: {fileID: 0}
   upgradeNodePrefab: {fileID: 5312669122133167071, guid: aaea34026dc1a3f4abd3685ed30e91ff, type: 3}
   pointsText: {fileID: 5556580159219227684}
   detailPanel: {fileID: 7544329297746869430}

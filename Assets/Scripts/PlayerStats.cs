@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public static class Player
@@ -229,8 +230,14 @@ public class PlayerStats : MonoBehaviour
         shield = 0;
         hp = 0;
         GameObject t = Instantiate(deadBody, transform.position, Quaternion.identity);
+        Invoke("LoadScene", 1f);
         cameraFollow.GetComponent<CameraFollowing>().SetObjectFollowing(t.transform);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+
+    void LoadScene()
+    {
+        SceneManager.LoadScene(0);
     }
 
     void AddHp(int _hp)
@@ -271,7 +278,7 @@ public class PlayerStats : MonoBehaviour
 
     public void SetPlayerText(int _idPlayer)
     {
-        textWeapon.text = _idPlayer == -1 ? "" : "Press E to play for " + DataBase.GetPlayer(_idPlayer).GetComponent<PlayerStats>().namePlayer;
+        textWeapon.text = _idPlayer == -1 ? "" : " Нажмите E чтобы играть за " + DataBase.GetPlayer(_idPlayer).GetComponent<PlayerStats>().namePlayer;
     }
 
     public void AddFunds(int _exp, int _hp, int _money)

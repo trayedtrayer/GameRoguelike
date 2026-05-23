@@ -1085,13 +1085,13 @@ MonoBehaviour:
     enemy: {fileID: 5372332452932671164, guid: d49d8e2a9d424544ab1981a8b9aed1b5, type: 3}
     weight: 1
   - costSpawn: 0.5
-    enemy: {fileID: 5372332452932671164, guid: d49d8e2a9d424544ab1981a8b9aed1b5, type: 3}
+    enemy: {fileID: 497916724547172217, guid: d6812a3d1535e0f4bb5cd9f9f457f8d9, type: 3}
     weight: 1
   - costSpawn: 0.5
-    enemy: {fileID: 5372332452932671164, guid: d49d8e2a9d424544ab1981a8b9aed1b5, type: 3}
+    enemy: {fileID: 497916724547172217, guid: 7b33fc7c9eae52a438ca2e28dd3ca984, type: 3}
     weight: 1
   - costSpawn: 0.5
-    enemy: {fileID: 5372332452932671164, guid: d49d8e2a9d424544ab1981a8b9aed1b5, type: 3}
+    enemy: {fileID: 497916724547172217, guid: ef7baa2564621594aa694743ceddf6f5, type: 3}
     weight: 1
   decorates: []
   countEnemies: 0
@@ -1144,7 +1144,7 @@ MonoBehaviour:
   portalOld: {fileID: 8074863486377489763, guid: 9dfdc51bed550af46bdee87473be0e16, type: 3}
   enemyCount: 0
   player: {fileID: 0}
-  minCountEnemy: 30
+  minCountEnemy: 5
   time: 30
   enemyKilled: 0
 --- !u!1660057539 &9223372036854775807

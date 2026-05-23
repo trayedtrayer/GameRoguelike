@@ -644,7 +644,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   isRoll: 0
   timeDilation: 0
-  timeDilationRollMax: 0
+  timeDilationRollMax: 2
   timeRoll: 0.5
   speedMultiplierRoll: 3
   parentStatusBar: {fileID: 1448047633865319368}
@@ -680,7 +680,6 @@ MonoBehaviour:
   shieldCooldownBar: {fileID: 9194222097161501316}
   hpBar: {fileID: 5339380264337291160}
   expBar: {fileID: 1473776729709703837}
-  loadBar: {fileID: 7957278097759733640}
   hpText: {fileID: 2423781675458364213}
   shieldText: {fileID: 4369303072659064551}
   expText: {fileID: 3531843063136056153}
