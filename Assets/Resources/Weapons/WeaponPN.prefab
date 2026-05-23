@@ -149,7 +149,7 @@ MonoBehaviour:
   spread: 20
   timeDelaySpray: 0
   countBullet: 1
-  forceBullet: 200
+  forceBullet: 280
   timeDelayStartShootMin: 0
   timeDelayStartShootMax: 0
   placeSpawn: {fileID: 2617534160536842171}
