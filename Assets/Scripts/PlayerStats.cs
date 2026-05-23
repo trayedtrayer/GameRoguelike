@@ -39,7 +39,6 @@ public class PlayerStats : MonoBehaviour
     public Image shieldCooldownBar;
     public Image hpBar;
     public Image expBar;
-    public Image loadBar;
     public TextMeshProUGUI hpText;
     public TextMeshProUGUI shieldText;
     public TextMeshProUGUI expText;
@@ -90,7 +89,10 @@ public class PlayerStats : MonoBehaviour
         playerId = stats.idPlayer;
         listItems = stats.items;
         money = stats.money;
-
+        for (int i = 0; i < listItems.Count; i++)
+        {
+            listItems[i].SetSprite(DataBase.GetItemByName(listItems[i].nameItem).GetSprite());
+        }
         GetComponentInChildren<Hand>().CreateWeaponForSave(DataBase.GetWeapon(stats.weaponOneName), 0);
         GetComponentInChildren<Hand>().CreateWeaponForSave(DataBase.GetWeapon(stats.weaponTwoName), 1);
         if (UpgradeManager.Instance != null && stats.upgradeLevels != null)

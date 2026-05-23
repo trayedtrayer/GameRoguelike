@@ -31,12 +31,12 @@ public class XmlSaver : MonoBehaviour
     GameObject gameObj;
     public Image eButton;
 
-    public void SetNewLevel(GameObject player, Image load, int buildIndex)
+    public void SetNewLevel(GameObject player, int buildIndex)
     {
-        print(player + "-" + load + "-" + buildIndex);
+        print(player + "-" + buildIndex);
         if (!isLoading)
         {
-            StartCoroutine(PlayerLoad(player, load, buildIndex));
+            StartCoroutine(PlayerLoad(player, buildIndex));
         }
     }
 
@@ -46,14 +46,14 @@ public class XmlSaver : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                SetNewLevel(gameObj, gameObj.GetComponent<PlayerStats>().loadBar, 1);
+                SetNewLevel(gameObj, 1);
             }
         }
     }
 
-    IEnumerator PlayerLoad(GameObject player, Image load, int buildIndex)
+    IEnumerator PlayerLoad(GameObject player, int buildIndex)
     {
-        load.gameObject.SetActive(true);
+        //load.gameObject.SetActive(true);
         player.GetComponent<PlayerStats>().CompleteLevel();
         yield return new WaitForSeconds(0.02f);
         isLoading = true;
@@ -62,7 +62,6 @@ public class XmlSaver : MonoBehaviour
         Time.timeScale = 0f;
         while (!ap.isDone)
         {
-            load.fillAmount = Mathf.Clamp01(ap.progress / .9f);
             yield return null;
         }
         isLoading = false;
@@ -94,7 +93,6 @@ public class XmlSaver : MonoBehaviour
             File.Create(filePath).Dispose();
         }
 
-        // Собираем данные прокачки
         int devPoints = 0;
         List<UpgradeSaveEntry> upgradeEntries = new List<UpgradeSaveEntry>();
         if (UpgradeManager.Instance != null)
@@ -117,7 +115,6 @@ public class XmlSaver : MonoBehaviour
             items = playerStats.GetPlayerInventory(),
             money = playerStats.GetMoneyCount(),
             objectsActive = playerStats.PlayerBuilds(),
-            // Прокачка
             developmentPoints = devPoints,
             upgradeLevels = upgradeEntries
         };

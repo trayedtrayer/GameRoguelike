@@ -37,7 +37,6 @@ public class WorldGeneration : MonoBehaviour
     public List<Enemy> enemy;
     public List<Decorates> decorates;
 
-    [HideInInspector]
     public int countEnemies;
     public int[,] centers;
     public Transform parentForEnemy;
@@ -78,8 +77,15 @@ public class WorldGeneration : MonoBehaviour
     {
         DataBase.SetWeapons();
         player = DataBase.GetPlayer(XmlSaver.Read().idPlayer);
-
-        InitializeRuntimeEnemies();
+        if(player.GetComponent<PlayerStats>().GetLvl() > 10)
+        {
+            lvl = player.GetComponent<PlayerStats>().GetLvl() * 2;
+        }
+        else
+        {
+            lvl = 15;
+        }
+            InitializeRuntimeEnemies();
         SetEnemiesCount();
         CreateWorld();
 

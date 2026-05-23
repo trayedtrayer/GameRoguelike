@@ -83,8 +83,8 @@ public class ArsenalChest : MonoBehaviour
     {
         var hand = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Hand>();
         if (hand == null) return;
-        WeaponStorage.InstanceWeaponStorage.TakeWeapon(weapon.weaponName);
-        WeaponStorage.InstanceWeaponStorage.AddWeapon(hand.GetNameActiveWeapon());
+        //WeaponStorage.InstanceWeaponStorage.TakeWeapon(weapon.weaponName);
+        //WeaponStorage.InstanceWeaponStorage.AddWeapon(hand.GetNameActiveWeapon());
         int slot = hand.activeWeapon;
         GameObject weaponPrefab = DataBase.GetWeapon(weapon.weaponName);
         if (weaponPrefab != null) hand.CreateWeaponForSave(weaponPrefab, slot);

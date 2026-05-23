@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 public static class DataBase
 {
@@ -37,6 +38,12 @@ public static class DataBase
         {
             return sprite;
         }
+
+        public void SetSprite(Sprite _sprite)
+        {
+            sprite = _sprite;
+        }
+
         public Item CreateItem(int _count, string _name, Sprite _sprite)
         {
             Item item = new Item();
@@ -142,6 +149,18 @@ public static class DataBase
             if (inactivePlayer[i].GetComponent<InactivePlayerScript>().inactivePlayerId == _idPlayer)
             {
                 return inactivePlayer[i];
+            }
+        }
+        return null;
+    }
+
+    public static Item GetItemByName(string name)
+    {
+        for (int i = 0; i < itemsList.Count; i++)
+        {
+            if (itemsList[i].nameItem == name)
+            {
+                return itemsList[i];
             }
         }
         return null;
