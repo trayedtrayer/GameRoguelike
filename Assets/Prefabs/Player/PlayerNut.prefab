@@ -600,6 +600,7 @@ GameObject:
   - component: {fileID: 201415718162098574}
   - component: {fileID: 4009313635388956879}
   - component: {fileID: 4585321152274950375}
+  - component: {fileID: 4583527049585782906}
   m_Layer: 6
   m_Name: PlayerNut
   m_TagString: Player
@@ -648,6 +649,8 @@ MonoBehaviour:
   speedMultiplierRoll: 3
   parentStatusBar: {fileID: 1448047633865319368}
   prefabCooldown: {fileID: 2225090201683541940, guid: 64ef35904a2add148b30236bba597940, type: 3}
+  dashSound: {fileID: 8300000, guid: f64af05c5966f1641be10e386c91fdea, type: 3}
+  audioSource: {fileID: 4583527049585782906}
 --- !u!114 &3707743957893119659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,6 +670,7 @@ MonoBehaviour:
   maxShield: 20
   money: 0
   isMortal: 0
+  cameraFollow: {fileID: 0}
   namePlayer: 
   playerId: 0
   deadBody: {fileID: 5918164333479790651, guid: 55f835e2e698ba54cb860dba7023ca9f, type: 3}
@@ -795,6 +799,9 @@ MonoBehaviour:
   contentGeneral: {fileID: 6443852158621550402}
   contentWeapon: {fileID: 2399565016441920136}
   contentSpecial: {fileID: 4171294802561494812}
+  ScrollViewGeneral: {fileID: 0}
+  ScrollViewWeapon: {fileID: 0}
+  ScrollViewSpecial: {fileID: 0}
   upgradeNodePrefab: {fileID: 5312669122133167071, guid: aaea34026dc1a3f4abd3685ed30e91ff, type: 3}
   pointsText: {fileID: 5556580159219227684}
   detailPanel: {fileID: 7042677137893606805}
@@ -803,6 +810,103 @@ MonoBehaviour:
   detailCost: {fileID: 6389954189610498113}
   detailBuyButton: {fileID: 1207632756502176266}
   detailBuyButtonText: {fileID: 1729167709668330485}
+--- !u!82 &4583527049585782906
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986231425567622379}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1012483920617623124
 GameObject:
   m_ObjectHideFlags: 0
@@ -1537,7 +1641,6 @@ MonoBehaviour:
   TimeCooldown: 0
   skin: {fileID: 5584756122874610505}
   weapon: {fileID: 4846933237874736843}
-  weaponToTake: {fileID: 0}
   weaponOneImage: {fileID: 2380087783595771644}
   weaponTwoImage: {fileID: 3864117189130349309}
 --- !u!1 &2503186279645844177

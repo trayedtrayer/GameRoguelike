@@ -141,11 +141,11 @@ MonoBehaviour:
   bullet: {fileID: 4082074386870515803, guid: 460bacaadb1bab643800507def661701, type: 3}
   shotEffect: {fileID: 6474085531190496994, guid: 7c5836acd89dbba47a0b34c8195ed31c, type: 3}
   canPenetrate: 0
-  timeDestroy: 3
+  timeDestroy: 4
   isPushing: 0
   isBreaking: 0
   isReflect: 0
-  timeDelayShot: 0.1
+  timeDelayShot: 0.3
   spread: 3
   timeDelaySpray: 0
   countBullet: 1

@@ -777,7 +777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1065614042402798110, guid: 186b0b41dbefba943bf3b93b8eb0ec5c, type: 3}
       propertyPath: item.nameItem
-      value: "\u041C\u0435\u0448\u043E\u0447\u0435\u043A"
+      value: "\u0411\u0430\u0442\u0430\u0440\u0435\u0439\u043A\u0430"
       objectReference: {fileID: 0}
     - target: {fileID: 1065614042402798110, guid: 186b0b41dbefba943bf3b93b8eb0ec5c, type: 3}
       propertyPath: item.countItem

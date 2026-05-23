@@ -31,7 +31,8 @@ MonoBehaviour:
       count: 3
   - levelPoints: 4
     items:
-    - itemName: "\u0414\u0435\u043D\u044C\u0433\u0438"
+    - itemName: "\u0414\u0435\u043D\u044C\u0433\u0438 \u0440\u0430\u0437\u0440\u0443\u0448\u0435\u043D\u043D\u043E\u0433\u043E
+        \u043C\u0438\u0440\u0430"
       count: 30
     - itemName: "\u041C\u0435\u0448\u043E\u0447\u0435\u043A"
       count: 15
