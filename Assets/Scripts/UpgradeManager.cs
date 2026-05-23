@@ -138,9 +138,13 @@ public class UpgradeManager : MonoBehaviour
     public bool CanAfford(UpgradeNodeData node)
     {
         int cur = GetCurrentLevel(node);
+        print(IsRequirementMet(node));
+        print(cur >= node.MaxLevel);
+        print(node.playerIdFilter != 0 && node.playerIdFilter == activePlayerId);
+        print(developmentPoints < node.levelCosts[cur].levelPoints);
         if (cur >= node.MaxLevel) return false;
-        if (!IsRequirementMet(node)) return false;
-        if (node.playerIdFilter != 0 && node.playerIdFilter != activePlayerId) return false;
+        if (developmentPoints < node.levelCosts[cur].levelPoints) return false;
+        if (node.playerIdFilter != 0 && node.playerIdFilter == activePlayerId) return false;
         if (developmentPoints < node.levelCosts[cur].levelPoints) return false;
         var ps = GetPlayerStats();
         if (ps == null) return false;

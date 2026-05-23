@@ -106,7 +106,6 @@ public class Hand : MonoBehaviour
             activeWeapon = 0;
             GunOne.SetActive(true);
             GunTwo.SetActive(false);
-            GunOne.GetComponentInChildren<WeaponMain>().StartShooting();
             StartCoroutine(SetSkins(0));
             weaponOneImage.sprite = GunOne.GetComponentInChildren<WeaponMain>().spriteWeapon;
         }
@@ -115,7 +114,6 @@ public class Hand : MonoBehaviour
             activeWeapon = 1;
             GunOne.SetActive(false);
             GunTwo.SetActive(true);
-            GunTwo.GetComponentInChildren<WeaponMain>().StartShooting();
             StartCoroutine(SetSkins(1));
             weaponTwoImage.sprite = GunTwo.GetComponentInChildren<WeaponMain>().spriteWeapon;
         }
@@ -170,11 +168,11 @@ public class Hand : MonoBehaviour
    {
         if(activeWeapon == 0)
         {
-            return GunOne.GetComponent<WeaponMain>().weaponName;
+            return GunOne.GetComponentInChildren<WeaponMain>().weaponName;
         }
         else
         {
-            return GunTwo.GetComponent<WeaponMain>().weaponName;
+            return GunTwo.GetComponentInChildren<WeaponMain>().weaponName;
         }
     }
 }

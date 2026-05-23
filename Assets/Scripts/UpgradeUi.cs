@@ -53,8 +53,6 @@ public class UpgradeUI : MonoBehaviour
         tabWeapon.onClick.AddListener(() => SwitchBranch(UpgradeBranch.Weapon));
         tabSpecial.onClick.AddListener(() => SwitchBranch(UpgradeBranch.Special));
 
-        detailBuyButton.onClick.AddListener(OnBuyClicked);
-
         BuildAllCards();
     }
 
@@ -95,8 +93,6 @@ public class UpgradeUI : MonoBehaviour
         ScrollViewGeneral.gameObject.SetActive(branch == UpgradeBranch.General);
         ScrollViewWeapon.gameObject.SetActive(branch == UpgradeBranch.Weapon);
         ScrollViewSpecial.gameObject.SetActive(branch == UpgradeBranch.Special);
-
-        // Подсветка активной вкладки
         SetTabActive(tabGeneral, branch == UpgradeBranch.General);
         SetTabActive(tabWeapon, branch == UpgradeBranch.Weapon);
         SetTabActive(tabSpecial, branch == UpgradeBranch.Special);

@@ -174,7 +174,7 @@ MonoBehaviour:
   bullet: {fileID: 2224278478941134252, guid: 30232a992191a52419aacd3f4738b1e2, type: 3}
   shotEffect: {fileID: 0}
   canPenetrate: 0
-  timeDestroy: 1
+  timeDestroy: 2
   isPushing: 0
   isBreaking: 0
   isReflect: 0

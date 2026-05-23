@@ -69,6 +69,8 @@ public class WeaponMain : MonoBehaviour
         if (shotEffect != null)
             Destroy(Instantiate(shotEffect, placeSpawn.transform.position, transform.rotation), 0.2f);
 
+        print(finalCount);
+
         for (int i = 0; i < finalCount; i++)
         {
             SpawnBullet(finalDamage, finalSpread, finalForce, finalPenetrate, finalReflect);
@@ -87,7 +89,7 @@ public class WeaponMain : MonoBehaviour
         _b.transform.position = placeSpawn.position;
         _b.transform.rotation = placeSpawn.rotation;
         _b.transform.Rotate(0, 0, Random.Range(-currentSpread, currentSpread));
-
+        print("123123123");
         var rb = _b.GetComponent<Rigidbody2D>();
         if (rb != null) rb.AddForce(_b.transform.right * force);
 

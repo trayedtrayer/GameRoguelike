@@ -57,7 +57,6 @@ public class UpgradeNodeUI : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        print("12312");
         if (upgradeUI != null && node != null)
             upgradeUI.SelectNode(node);
     }
