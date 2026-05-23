@@ -108,6 +108,7 @@ public class Hand : MonoBehaviour
             GunTwo.SetActive(false);
             StartCoroutine(SetSkins(0));
             weaponOneImage.sprite = GunOne.GetComponentInChildren<WeaponMain>().spriteWeapon;
+            GunOne.GetComponentInChildren<WeaponMain>().AllCorous();
         }
         else
         {
@@ -115,6 +116,7 @@ public class Hand : MonoBehaviour
             GunOne.SetActive(false);
             GunTwo.SetActive(true);
             StartCoroutine(SetSkins(1));
+            GunTwo.GetComponentInChildren<WeaponMain>().AllCorous();
             weaponTwoImage.sprite = GunTwo.GetComponentInChildren<WeaponMain>().spriteWeapon;
         }
     }

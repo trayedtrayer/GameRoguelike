@@ -49,6 +49,12 @@ public class WeaponMain : MonoBehaviour
 
     public virtual void StartShooting() { }
 
+    public void AllCorous()
+    {
+        StopAllCoroutines();
+        StartShooting();
+    }
+
     public void Shoot() => StartCoroutine(Shoots());
 
     protected IEnumerator Shoots()
