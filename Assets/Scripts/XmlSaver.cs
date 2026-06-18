@@ -46,7 +46,7 @@ public class XmlSaver : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                SetNewLevel(gameObj, 1);
+                SetNewLevel(gameObj, 2);
             }
         }
     }
