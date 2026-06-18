@@ -85,6 +85,7 @@ public class PauseMenu : MonoBehaviour
         background.SetActive(false);
         UnlockWindows();
         Time.timeScale = 1f;
+        ApplySettings();
         isPaused = false;
     }
 
