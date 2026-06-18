@@ -1294,6 +1294,7 @@ MonoBehaviour:
   detailCost: {fileID: 8976535220443523812}
   detailBuyButton: {fileID: 580750162088524441}
   detailBuyButtonText: {fileID: 2661512475738276429}
+  isBlock: 0
 --- !u!114 &446219704264641820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1334,6 +1335,7 @@ MonoBehaviour:
   chestWindow: {fileID: 3464957488225729384}
   weaponGrid: {fileID: 1903197669859344643}
   weaponCardPrefab: {fileID: 3379990812569114070, guid: 3f8c399a4b20c5849acf481dc9424373, type: 3}
+  isBlock: 0
 --- !u!82 &1631581921957307227
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1343,7 +1345,7 @@ AudioSource:
   m_GameObject: {fileID: 986231425567622379}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 688876452531842918, guid: 29eb5ed15b78cc9438e6197c8066fb25, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0

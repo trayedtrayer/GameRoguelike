@@ -72,9 +72,9 @@ public class PauseMenu : MonoBehaviour
 
         if(player == null)
         {
-            GameObject.Find("Player");
+            player = GameObject.FindGameObjectWithTag("Player");
         }
-
+        CloseAndBlockPlayerWindows();
         Time.timeScale = 0f;
         isPaused = true;
         Cursor.visible = true;
@@ -83,7 +83,7 @@ public class PauseMenu : MonoBehaviour
     public void CloseMenu()
     {
         background.SetActive(false);
-
+        UnlockWindows();
         Time.timeScale = 1f;
         isPaused = false;
     }

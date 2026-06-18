@@ -809,6 +809,7 @@ MonoBehaviour:
   detailCost: {fileID: 6389954189610498113}
   detailBuyButton: {fileID: 1207632756502176266}
   detailBuyButtonText: {fileID: 1729167709668330485}
+  isBlock: 0
 --- !u!82 &4583527049585782906
 AudioSource:
   m_ObjectHideFlags: 0
@@ -818,7 +819,7 @@ AudioSource:
   m_GameObject: {fileID: 986231425567622379}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 688876452531842918, guid: 29eb5ed15b78cc9438e6197c8066fb25, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -2429,7 +2430,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3669398405474135974
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2570,7 +2571,7 @@ RectTransform:
   m_Father: {fileID: 5734840798059545873}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3605,7 +3606,7 @@ RectTransform:
   m_Father: {fileID: 8224579822035346154}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4919,7 +4920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8527562460217445119
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5045,7 +5046,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6262662334679621561
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11216,7 +11217,7 @@ RectTransform:
   m_Father: {fileID: 737220741660158724}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
