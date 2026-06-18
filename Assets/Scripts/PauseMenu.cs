@@ -20,6 +20,8 @@ public class PauseMenu : MonoBehaviour
     public Slider sfxSlider;
     public AudioMixer audioMixer;
 
+    GameObject player;
+
     private void Awake()
     {
         if (instance == null)
@@ -67,6 +69,11 @@ public class PauseMenu : MonoBehaviour
     {
         background.SetActive(true);
         ShowMain();
+
+        if(player == null)
+        {
+            GameObject.Find("Player");
+        }
 
         Time.timeScale = 0f;
         isPaused = true;
@@ -121,5 +128,19 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void CloseAndBlockPlayerWindows()
+    {
+        player.GetComponent<UpgradeUI>().CloseMenuAndBlock();
+        player.GetComponent<Crafting>().CloseAndBlock();
+        player.GetComponent<ArsenalChest>().CloseAndBlock();
+    }
+
+    public void UnlockWindows()
+    {
+        player.GetComponent<UpgradeUI>().Unlock();
+        player.GetComponent<Crafting>().Unlock();
+        player.GetComponent<ArsenalChest>().Unlock();
     }
 }

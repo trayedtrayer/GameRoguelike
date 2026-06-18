@@ -42,6 +42,7 @@ public class UpgradeUI : MonoBehaviour
     private UpgradeNodeData selectedNode;
     private List<UpgradeNodeUI> spawnedCards = new List<UpgradeNodeUI>();
 
+    public bool isBlock = false;
     private bool isOpen = false;
 
     private void Start()
@@ -58,7 +59,7 @@ public class UpgradeUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && !isBlock)
         {
             if (isOpen) CloseMenu();
             else OpenMenu();
@@ -84,6 +85,17 @@ public class UpgradeUI : MonoBehaviour
         detailPanel.SetActive(false);
         selectedNode = null;
         Time.timeScale = 1f;
+    }
+
+    public void CloseMenuAndBlock()
+    {
+        CloseMenu();
+        isBlock = true;
+    }
+
+    public void Unlock()
+    {
+        isBlock = false;
     }
 
     private void SwitchBranch(UpgradeBranch branch)

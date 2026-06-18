@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,8 @@ public class ArsenalChest : MonoBehaviour
     public GameObject weaponCardPrefab;
 
     private bool isOpen = false;
+    public bool isBlock = false;
+
     private List<GameObject> spawnedCards = new List<GameObject>();
 
     private void Start()
@@ -20,7 +23,7 @@ public class ArsenalChest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B) && !isBlock)
         {
             if (isOpen) CloseChest();
             else OpenChest();
@@ -33,6 +36,17 @@ public class ArsenalChest : MonoBehaviour
         chestWindow.SetActive(true);
         Time.timeScale = 0f;
         BuildCards();
+    }
+
+    public void CloseAndBlock()
+    {
+        CloseChest();
+        isBlock = true;
+    }
+
+    public void Unlock()
+    {
+        isBlock = false;
     }
 
     public void CloseChest()

@@ -43,6 +43,7 @@ public class Crafting : MonoBehaviour
     private bool isOpen = false;
     private List<GameObject> cards = new List<GameObject>();
     bool isGenerated;
+    bool isBlock = false;
 
     private void Awake()
     {
@@ -59,7 +60,7 @@ public class Crafting : MonoBehaviour
 
     private void Update()
     {
-        if (!isOpen && Input.GetKeyDown(KeyCode.K))
+        if (!isBlock && !isOpen && Input.GetKeyDown(KeyCode.K))
             Open();
         else if (isOpen && Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.K))
             Close();
@@ -197,6 +198,17 @@ public class Crafting : MonoBehaviour
         mainWindow.transform.parent.gameObject.SetActive(false);
         Time.timeScale = 1f;
     }
+
+    public void CloseAndBlock()
+    {
+        Close();
+        isBlock = true;
+    }
+
+    public void Unlock()
+    {
+        isBlock = true;
+    }    
 
     public void Reopen()
     {

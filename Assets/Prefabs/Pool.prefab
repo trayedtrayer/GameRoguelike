@@ -48,3 +48,12 @@ MonoBehaviour:
   - prefabPool: {fileID: 4082074386870515803, guid: e368650a1fd9a814db2d0cb23963d4eb, type: 3}
     poolSize: 30
     maxPoolSize: 50
+  - prefabPool: {fileID: 4082074386870515803, guid: 460bacaadb1bab643800507def661701, type: 3}
+    poolSize: 30
+    maxPoolSize: 50
+  - prefabPool: {fileID: 6595566476608387174, guid: 9b3a297b6751e9b43993514197063a63, type: 3}
+    poolSize: 10
+    maxPoolSize: 20
+  - prefabPool: {fileID: 2224278478941134252, guid: 30232a992191a52419aacd3f4738b1e2, type: 3}
+    poolSize: 10
+    maxPoolSize: 20
